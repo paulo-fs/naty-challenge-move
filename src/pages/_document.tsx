@@ -1,6 +1,5 @@
 import { Html, Head, Main, NextScript } from 'next/document'
-import CssBaseline from '@mui/material/CssBaseline';
-import theme from '@/styles/theme';
+import theme, { roboto } from '@/styles/theme';
 
 export default function Document() {
   return (
@@ -8,7 +7,7 @@ export default function Document() {
       <Head>
         <meta name="theme-color" content={theme.palette.primary.main} />
       </Head>
-      <body>
+      <body className={roboto.className}>
           <Main />
           <NextScript />
       </body>
