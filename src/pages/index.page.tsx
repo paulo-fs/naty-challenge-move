@@ -1,5 +1,7 @@
 import Head from 'next/head'
 import { Roboto } from 'next/font/google'
+import { Box, Button, Card, Container, CardContent, CardActions, Typography, Icon, SvgIcon } from '@mui/material'
+import Link from 'next/link'
 
 const roboto = Roboto({ subsets: ['latin'], weight: ['300', '400', '500', '700'] })
 
@@ -12,9 +14,36 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={roboto.className}>
-        Hello world!
-      </main>
+      <Container maxWidth='xl' sx={{ height: '98vh' }}>
+        <Box component={'main'} display='flex' flexDirection='column' alignItems='center' justifyContent='center' width='100%' height='100%'>
+          <Typography component='h1' variant='h3' color='primary' fontWeight={700}>
+            MOVE
+          </Typography>
+          <Typography>
+            Sua plataforma de deslocamento.
+          </Typography>
+
+          <Card variant='outlined' sx={{ width: 'contain', maxWidth: '100%', marginTop: 6, padding: 2 }}>
+            <CardContent>
+              <Typography variant='h6' fontWeight={600}>
+                Seja bem vindo a plataforma Move.
+              </Typography>
+              <Typography>
+                Escolha como deseja utilizar a plataforma:
+              </Typography>
+            </CardContent>
+
+            <CardActions>
+              <Link href='/passanger'>
+                <Button variant='contained' color='primary'>Passageiro</Button>
+              </Link>
+              <Link href='/driver'>
+                <Button variant='outlined'>Motorista</Button>
+              </Link>
+            </CardActions>
+          </Card>
+        </Box>
+      </Container>
     </>
   )
 }
