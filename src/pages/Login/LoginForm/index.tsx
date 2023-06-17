@@ -1,32 +1,40 @@
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { Box, FormControl, FormControlLabel, FormLabel, IconButton, InputAdornment, OutlinedInput, Radio, RadioGroup, TextField } from "@mui/material";
 import React from "react";
+import { useLoginForm } from "./LoginForm.controller";
+import { NotificationModal } from "@/components";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { Box, Button, FormControl, FormControlLabel, FormLabel, IconButton, InputAdornment, OutlinedInput, Radio, RadioGroup, TextField } from "@mui/material";
 
 export function LoginForm() {
-  const [showPassword, setShowPassword] = React.useState(false)
-  const [radioGroupValue, setRadioGroupValue] = React.useState('passageiro')
-
-  console.log(radioGroupValue)
-
-  function handleClickShowPassword() {
-    setShowPassword((show) => !show)
-  }
-
-  function handleMouseDownPassword(event: React.MouseEvent<HTMLButtonElement>){
-    event.preventDefault()
-  }
-
-  function handleRadioGroupChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setRadioGroupValue((event.target as HTMLInputElement).value)
-  }
+  const {
+    showPassword,
+    radioGroupValue,
+    userId,
+    password,
+    isModalOpen,
+    modalContent,
+    isDisabled,
+    handleClickShowPassword,
+    handlePasswordInputChange,
+    handleIdInputChange,
+    handleModalClose,
+    handleMouseDownPassword,
+    handleRadioGroupChange,
+    handleSubmit
+  } = useLoginForm()
 
   return (
-    <FormControl sx={{ display: 'flex'}}>
+    <FormControl sx={{ display: 'flex'}} component='form' onSubmit={handleSubmit}>
       <Box display='flex' flexDirection='column' gap={2} marginTop={2}>
-        <TextField placeholder='Digite seu id' />
+        <TextField
+          placeholder='Digite o número do seu id'
+          value={userId}
+          onChange={handleIdInputChange}
+        />
         <OutlinedInput
           placeholder='Digite sua senha'
           type={showPassword ? 'text' : 'password'}
+          value={password}
+          onChange={handlePasswordInputChange}
           endAdornment={
             <InputAdornment position='end'>
               <IconButton
@@ -56,6 +64,21 @@ export function LoginForm() {
           <FormControlLabel value='motorista' control={<Radio />} label='Motorista' />
         </RadioGroup>
       </Box>
+
+      <Button
+        variant="contained"
+        type="submit"
+        disabled={isDisabled}
+      >
+        Entrar
+      </Button>
+      <NotificationModal
+        isModalOpen={isModalOpen}
+        handleModalClose={handleModalClose}
+        modalTitle={modalContent.title}
+        modalDescription={modalContent.message}
+        error={modalContent.error}
+      />
     </FormControl>
   )
 }
