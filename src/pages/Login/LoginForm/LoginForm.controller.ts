@@ -46,8 +46,13 @@ export function useLoginForm() {
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     if (isDisabled) return;
+    const requestUrl =
+      radioGroupValue === "passageiro"
+        ? `/Cliente/${userId}`
+        : `/Condutor/${userId}`;
+
     try {
-      await axiosApi.get(`/Cliente/${userId}`, {
+      await axiosApi.get(requestUrl, {
         headers: {
           "Content-Type": "application/json",
         },
