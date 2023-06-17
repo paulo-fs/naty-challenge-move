@@ -10,8 +10,8 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
       <>
-        <CssBaseline />
         <Component {...pageProps} />
+        <CssBaseline />
       </>
     </>
   )
