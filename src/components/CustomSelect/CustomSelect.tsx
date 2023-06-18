@@ -1,15 +1,12 @@
 import { InputLabel, MenuItem, Select, SelectChangeEvent, SelectProps } from "@mui/material";
 import { CustomSelectProps, MenuProps } from "./CustomSelect.props";
 
-export function CustomSelect({valuesList, label, selectedValue, placeholderValue, setValueFunc}: CustomSelectProps) {
+export function CustomSelect({
+  valuesList, label, selectedValue, placeholderValue, setValueFunc, setId
+}: CustomSelectProps) {
   const handleChange = (event: SelectChangeEvent<typeof selectedValue>) => {
-    const {
-      target: { value },
-    } = event;
-    setValueFunc(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
-    );
+    const { target: { value } } = event;
+    setValueFunc(String(value));
   };
 
   return (
@@ -26,20 +23,23 @@ export function CustomSelect({valuesList, label, selectedValue, placeholderValue
           if (selected.length === 0) {
             return <em>{placeholderValue ?? 'Placeholder'}</em>
           }
-          return selected.join(', ')
+          return selected
         }}
       >
         <MenuItem disabled value=''>
           <em>Placeholder</em>
         </MenuItem>
-        {valuesList.map((name) => (
-          <MenuItem
-            key={name}
-            value={name}
-          >
-            {name}
-          </MenuItem>
-        ))}
+        {valuesList.map((driver) => {
+          setId(driver.id)
+          return (
+            <MenuItem
+              key={driver.id}
+              value={driver.nome}
+            >
+              {driver.nome}
+            </MenuItem>
+          )
+        })}
       </Select>
     </>
   )

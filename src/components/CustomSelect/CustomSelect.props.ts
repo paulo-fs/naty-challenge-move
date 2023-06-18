@@ -1,12 +1,18 @@
 import { SelectProps } from "@mui/material";
 import { Dispatch, SetStateAction } from "react";
 
+type IValueList = {
+  id: string;
+  nome: string;
+};
+
 export interface CustomSelectProps extends SelectProps {
-  valuesList: string[];
+  valuesList: IValueList[];
   label: string;
-  selectedValue: string[];
+  selectedValue: string;
   placeholderValue?: string;
-  setValueFunc: Dispatch<SetStateAction<string[]>>;
+  setValueFunc: Dispatch<SetStateAction<string>>;
+  setId: Dispatch<SetStateAction<string>>;
 }
 
 const ITEM_HEIGHT = 48;
