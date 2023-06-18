@@ -1,4 +1,4 @@
-import { InputLabel, MenuItem, Select, SelectChangeEvent, SelectProps } from "@mui/material";
+import { InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { CustomSelectProps, MenuProps } from "./CustomSelect.props";
 
 export function CustomSelect({
@@ -21,13 +21,13 @@ export function CustomSelect({
         MenuProps={MenuProps}
         renderValue={(selected) => {
           if (selected.length === 0) {
-            return <em>{placeholderValue ?? 'Placeholder'}</em>
+            return <em>{placeholderValue ?? 'Selecione'}</em>
           }
           return selected
         }}
       >
         <MenuItem disabled value=''>
-          <em>Placeholder</em>
+          <em>{placeholderValue}</em>
         </MenuItem>
         {valuesList.map((driver) => {
           setId(driver.id)
