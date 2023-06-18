@@ -9,6 +9,13 @@ export interface IDisplacementCreate {
   idCliente: number;
 }
 
+export interface IDisplacementRequiredData {
+  observacao?: string;
+  idCondutor: number;
+  idVeiculo: number;
+  idCliente: number;
+}
+
 export interface IDisplacementUpdate {
   id: string;
   kmFinal: number;
