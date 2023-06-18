@@ -29,7 +29,7 @@ export function CustomSelect({
         <MenuItem disabled value=''>
           <em>{placeholderValue}</em>
         </MenuItem>
-        {valuesList.map((driver) => {
+        {valuesList && valuesList.map((driver) => {
           setId(driver.id)
           return (
             <MenuItem
