@@ -18,3 +18,8 @@ export interface IDriverDelete {
 export interface IDriver extends IDriverCreate {
   id: string;
 }
+
+export interface IDriverSelectInputData {
+  id: string;
+  nome: string;
+}
