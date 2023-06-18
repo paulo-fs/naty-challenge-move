@@ -52,11 +52,7 @@ export function useLoginForm() {
         : `/Condutor/${userId}`;
 
     try {
-      await axiosApi.get(requestUrl, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      await axiosApi.get(requestUrl);
       return router.push(`/${radioGroupValue}/${userId}`);
     } catch (err) {
       setModalContent({
