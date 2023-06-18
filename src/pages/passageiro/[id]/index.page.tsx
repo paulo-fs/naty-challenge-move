@@ -1,42 +1,45 @@
-import { useState } from "react";
-import { CustomSelect, HeaderMenu } from "@/components";
-import { Box, Button, Card, CardActions, CardContent, Container, Grid, Typography, SvgIcon } from "@mui/material";
-import iconCar from '@/assets/icons/car.svg'
 import Image from "next/image";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import { useRouter } from "next/router";
 
-const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
-];
+import { Button, Card, CardActions, CardContent, Container, Grid, Typography } from "@mui/material";
+import { CustomSelect, HeaderMenu } from "@/components";
+import { usePassanger } from "./passanger.controller";
 
-const cars = [
-  'Corsa',
-  'Gol',
-  'Fiesta',
-  'Palio'
-]
+import { getUserById } from "@/services/requests/user.request";
+import { getDriversInputList } from "@/services/requests/driver.request";
+import { IUser } from "@/dataTypes/passanger.dto";
+import { IDriverSelectInputData } from "@/dataTypes/driver.dto";
 
-export default function PassangerPage() {
-  const [driverName, setDriverName] = useState<string[]>([])
-  const [selectedCar, setSelectedCar] = useState<string[]>([])
-  const isDisabled = driverName.length ===0 || selectedCar.length === 0
+import iconCar from '@/assets/icons/car.svg'
+import { getVehicleInputData } from "@/services/requests/vehicle.request";
+import { IVehicleSelectInputData } from "@/dataTypes/vehicle.dto";
+
+export default function PassangerPage({ user, drivers, vehicles } : InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const {
+    driverName,
+    setDriverName,
+    setDriverId,
+    carModel,
+    setCarModel,
+    setCarId,
+    isDisabled,
+  } = usePassanger()
+
+  const router = useRouter()
+
+  if (user === null) {
+    router.replace('/')
+  }
 
   return (
     <>
       <HeaderMenu />
       <Container maxWidth='xl'>
-        <Grid container display='flex' marginTop={20} >
+        <Grid container display='flex' marginTop={14} >
           <Grid item sm={6} padding={2}>
-            <Typography component='h1' variant="h4">
-              Olá fulano,
+            <Typography component='h1' variant="h4" sx={{ textTransform: 'capitalize' }}>
+              Olá {user?.nome},
             </Typography>
             <Typography variant="body1">
               Para onde deseja ir hoje? Escolha um dos motoristas e carros disponíveis e, quando chegar ao seu destino, basta sinalizar a finalização do trajeto.
@@ -54,18 +57,20 @@ export default function PassangerPage() {
                 <CustomSelect
                   label="Motorista"
                   placeholderValue="Selecione o motorista"
-                  valuesList={names}
+                  valuesList={drivers!}
                   selectedValue={driverName}
                   setValueFunc={setDriverName}
+                  setId={setDriverId}
                 />
               </CardContent>
               <CardContent sx={{ display: 'flex', flexDirection: 'column' }}>
                 <CustomSelect
                   label="Selecione o carro"
                   placeholderValue="Selecione o carro"
-                  valuesList={cars}
-                  selectedValue={selectedCar}
-                  setValueFunc={setSelectedCar}
+                  valuesList={vehicles!}
+                  selectedValue={carModel}
+                  setValueFunc={setCarModel}
+                  setId={setCarId}
                 />
               </CardContent>
             </Card>
@@ -84,12 +89,12 @@ export default function PassangerPage() {
                   Carro selecionado:
                 </Typography>
                 <Typography color='primary' fontWeight={700} fontSize={20}>
-                  {selectedCar}
+                  {carModel}
                 </Typography>
               </CardContent>
 
               <CardActions>
-                <Button variant="contained" disableElevation disabled={isDisabled}>
+                <Button variant="contained" disabled={isDisabled}>
                   Iniciar trajeto
                 </Button>
               </CardActions>
@@ -100,3 +105,38 @@ export default function PassangerPage() {
     </>
   )
 }
+
+export const getServerSideProps: GetServerSideProps<{
+  user: IUser | null;
+  drivers: IDriverSelectInputData[] | null;
+  vehicles: IVehicleSelectInputData[] | null
+}> = async ({ req, res, params }) => {
+  res.setHeader(
+    "Cache-Control",
+    "public, s-maxage=20, stale-while-revalidate=59"
+  );
+
+  const userId = String(params?.id);
+
+  try {
+    const { user } = await getUserById(userId);
+    const { drivers } = await getDriversInputList();
+    const { vehicles } = await getVehicleInputData()
+
+    return {
+      props: {
+        user: user,
+        drivers: drivers,
+        vehicles: vehicles
+      },
+    };
+  } catch (err) {
+    return {
+      props: {
+        user: null,
+        drivers: null,
+        vehicles: null
+      },
+    };
+  }
+};
