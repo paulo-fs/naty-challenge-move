@@ -27,7 +27,7 @@ export function HeaderMenu() {
   }
 
   return (
-    <AppBar position='fixed' variant='outlined' color='primary'>
+    <AppBar position='fixed' variant='outlined' elevation={0} color='primary'>
       <Container maxWidth='xl'>
         <Toolbar>
           <Box sx={{ display: 'flex', mr: 1 }}>
