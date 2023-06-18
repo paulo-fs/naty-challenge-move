@@ -3,7 +3,7 @@ import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
 
 import { Button, Card, CardActions, CardContent, Container, Grid, Typography } from "@mui/material";
-import { CustomSelect, HeaderMenu } from "@/components";
+import { CustomSelect, HeaderMenu, NotificationModal } from "@/components";
 import { usePassanger } from "./passanger.controller";
 
 import { getUserById } from "@/services/requests/user.request";
@@ -24,7 +24,11 @@ export default function PassangerPage({ user, drivers, vehicles } : InferGetServ
     setCarModel,
     setCarId,
     isDisabled,
-  } = usePassanger()
+    handleStartDisplacement,
+    errorMessage,
+    isModalOpen,
+    handleCloseModal,
+  } = usePassanger(user?.id)
 
   const router = useRouter()
 
@@ -94,13 +98,20 @@ export default function PassangerPage({ user, drivers, vehicles } : InferGetServ
               </CardContent>
 
               <CardActions>
-                <Button variant="contained" disabled={isDisabled}>
+                <Button variant="contained" disabled={isDisabled} onClick={handleStartDisplacement}>
                   Iniciar trajeto
                 </Button>
               </CardActions>
             </Card>
           </Grid>
         </Grid>
+        <NotificationModal
+          handleModalClose={handleCloseModal}
+          isModalOpen={isModalOpen}
+          modalDescription={errorMessage}
+          modalTitle="Ops, algo deu errado"
+          error
+        />
       </Container>
     </>
   )
@@ -121,7 +132,7 @@ export const getServerSideProps: GetServerSideProps<{
   try {
     const { user } = await getUserById(userId);
     const { drivers } = await getDriversInputList();
-    const { vehicles } = await getVehicleInputData()
+    const { vehicles } = await getVehicleInputData();
 
     return {
       props: {
