@@ -2,15 +2,18 @@ import {
   IDisplacement,
   IDisplacementCreate,
   IDisplacementRequiredData,
+  IDisplacementUpdate,
 } from "@/dataTypes/displacement.dto";
+import { calculateFinalDistanceInKm } from "@/helpers/caculateFinalDistanceInKm";
 import { axiosApi } from "@/lib/axios";
+import { newDateOnBr } from "@/lib/dayjs";
 
 export async function startDisplacement(
   requestData: IDisplacementRequiredData
 ) {
   const bodyData: IDisplacementCreate = {
     kmInicial: 0,
-    inicioDeslocamento: new Date(),
+    inicioDeslocamento: newDateOnBr(),
     checkList: "ok",
     motivo: "inicio do deslocamento",
     observacao: requestData.observacao ?? "sem observação",
@@ -39,4 +42,24 @@ export async function getDisplacementById(
   return {
     displacement: data,
   };
+}
+
+type FinishProps = {
+  id: string;
+  startTime: string;
+  obervacao?: string;
+};
+
+export async function finishDisplacement(finishData: FinishProps) {
+  const bodyData: IDisplacementUpdate = {
+    id: finishData.id,
+    obervacao: finishData.obervacao ?? "",
+    kmFinal: calculateFinalDistanceInKm(finishData.startTime),
+    fimDeslocamento: newDateOnBr(),
+  };
+  await axiosApi({
+    method: "PUT",
+    url: `/Deslocamento/${finishData.id}/EncerrarDeslocamento`,
+    data: bodyData,
+  });
 }
