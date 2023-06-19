@@ -10,13 +10,13 @@ export function LoginForm() {
     radioGroupValue,
     userId,
     password,
-    isModalOpen,
-    modalContent,
     isDisabled,
+    closeNotificationModal,
+    isModalOpen,
+    modalInfos,
     handleClickShowPassword,
     handlePasswordInputChange,
     handleIdInputChange,
-    handleModalClose,
     handleMouseDownPassword,
     handleRadioGroupChange,
     handleSubmit
@@ -74,10 +74,8 @@ export function LoginForm() {
       </Button>
       <NotificationModal
         isModalOpen={isModalOpen}
-        handleModalClose={handleModalClose}
-        modalTitle={modalContent.title}
-        modalDescription={modalContent.message}
-        error={modalContent.error}
+        closeNotificationModal={closeNotificationModal}
+        modalInfos={modalInfos}
       />
     </FormControl>
   )

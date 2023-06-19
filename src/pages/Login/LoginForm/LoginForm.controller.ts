@@ -1,3 +1,4 @@
+import { useNotificationModal } from "@/components/NotificationModal/NotificationModal.controller";
 import { axiosApi } from "@/lib/axios";
 import { useRouter } from "next/router";
 import React from "react";
@@ -7,12 +8,13 @@ export function useLoginForm() {
   const [radioGroupValue, setRadioGroupValue] = React.useState("passageiro");
   const [userId, setUserId] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
-  const [modalContent, setModalContent] = React.useState({
-    title: "",
-    message: "",
-    error: false,
-  });
+
+  const {
+    closeNotificationModal,
+    defineNotificationModalInfos,
+    isModalOpen,
+    modalInfos,
+  } = useNotificationModal();
 
   const router = useRouter();
   const isDisabled = userId.length === 0 || password.length === 0;
@@ -39,10 +41,6 @@ export function useLoginForm() {
     setPassword(event.currentTarget.value);
   }
 
-  function handleModalClose() {
-    setIsModalOpen((state) => !state);
-  }
-
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     if (isDisabled) return;
@@ -55,12 +53,11 @@ export function useLoginForm() {
       await axiosApi.get(requestUrl);
       return router.push(`/${radioGroupValue}/${userId}`);
     } catch (err) {
-      setModalContent({
-        title: "Ops!",
+      defineNotificationModalInfos({
+        title: "Ops, algo deu errado!",
         message: "Usuário ou senha inválidos. Por favor, tente novamente.",
         error: true,
       });
-      setIsModalOpen(true);
     }
   }
 
@@ -69,13 +66,13 @@ export function useLoginForm() {
     radioGroupValue,
     userId,
     password,
-    isModalOpen,
-    modalContent,
     isDisabled,
+    closeNotificationModal,
+    isModalOpen,
+    modalInfos,
     handleClickShowPassword,
     handlePasswordInputChange,
     handleIdInputChange,
-    handleModalClose,
     handleMouseDownPassword,
     handleRadioGroupChange,
     handleSubmit,

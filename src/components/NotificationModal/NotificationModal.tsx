@@ -1,20 +1,19 @@
 import { Box, Button, Modal, Paper, Typography } from "@mui/material";
+import { INotificationModalInfos } from "./NotificationModal.controller";
 
 interface NotificationModalProps {
   isModalOpen: boolean
-  handleModalClose: () => void
-  modalTitle: string
-  modalDescription: string
-  error?: boolean
+  closeNotificationModal: () => void
+  modalInfos: INotificationModalInfos
 }
 
 export function NotificationModal({
-  isModalOpen, handleModalClose, modalTitle, modalDescription, error = false
+  isModalOpen, closeNotificationModal, modalInfos
 }: NotificationModalProps) {
   return (
     <Modal
       open={isModalOpen}
-      onClose={handleModalClose}
+      onClose={closeNotificationModal}
     >
       <Box sx={{
         width: '100%',
@@ -29,13 +28,13 @@ export function NotificationModal({
           flexDirection: 'column',
           gap: 2
         }}>
-          <Typography variant="h5" fontWeight={700} color={error ? 'error' : 'primary'}>
-            {modalTitle}
+          <Typography variant="h5" fontWeight={700} color={modalInfos.error ? 'error' : 'primary'}>
+            {modalInfos.title}
           </Typography>
           <Typography marginBottom={4}>
-            {modalDescription}
+            {modalInfos.message}
           </Typography>
-          <Button variant="contained" onClick={handleModalClose}>Fechar</Button>
+          <Button variant="contained" onClick={closeNotificationModal}>Fechar</Button>
         </Paper>
       </Box>
     </Modal>
