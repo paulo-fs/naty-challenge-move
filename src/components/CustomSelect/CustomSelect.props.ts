@@ -11,6 +11,7 @@ export interface CustomSelectProps extends SelectProps {
   label: string;
   selectedValue: string;
   placeholderValue?: string;
+  isDisabled?: boolean;
   setValueFunc: Dispatch<SetStateAction<string>>;
   setId: Dispatch<SetStateAction<string>>;
 }

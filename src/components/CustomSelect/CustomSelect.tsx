@@ -2,7 +2,7 @@ import { InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { CustomSelectProps, MenuProps } from "./CustomSelect.props";
 
 export function CustomSelect({
-  valuesList, label, selectedValue, placeholderValue, setValueFunc, setId
+  valuesList, label, selectedValue, placeholderValue, isDisabled = false,setValueFunc, setId
 }: CustomSelectProps) {
   const handleChange = (event: SelectChangeEvent<typeof selectedValue>) => {
     const { target: { value } } = event;
@@ -14,6 +14,7 @@ export function CustomSelect({
       <InputLabel id='driver-input'>{label}:</InputLabel>
       <Select
         labelId={label}
+        disabled={isDisabled}
         displayEmpty
         value={selectedValue}
         onChange={handleChange}
