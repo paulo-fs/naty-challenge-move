@@ -1,9 +1,8 @@
 import Image from "next/image";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import { useRouter } from "next/router";
 
-import { Button, Card, CardActions, CardContent, Container, Grid, Typography } from "@mui/material";
-import { CustomSelect, HeaderMenu, NotificationModal } from "@/components";
+import { Box, Button, Card, CardActions, CardContent, Container, Grid, Typography } from "@mui/material";
+import { CustomSelect, HeaderMenu, MySnackBar, NotificationModal } from "@/components";
 import { usePassanger } from "./passanger.controller";
 
 import { getUserById } from "@/services/requests/user.request";
@@ -14,6 +13,7 @@ import { IDriverSelectInputData } from "@/dataTypes/driver.dto";
 import iconCar from '@/assets/icons/car.svg'
 import { getVehicleInputData } from "@/services/requests/vehicle.request";
 import { IVehicleSelectInputData } from "@/dataTypes/vehicle.dto";
+import { ActiveDisplacement } from "./ActiveDisplacement";
 
 export default function PassangerPage({ user, drivers, vehicles } : InferGetServerSidePropsType<typeof getServerSideProps>) {
   const {
@@ -25,22 +25,23 @@ export default function PassangerPage({ user, drivers, vehicles } : InferGetServ
     setCarId,
     isDisabled,
     handleStartDisplacement,
-    errorMessage,
+    activeDisplacement,
+    handleFinishDisplacement,
+    closeNotificationModal,
     isModalOpen,
-    handleCloseModal,
+    modalInfos,
+    isSnackbarOpen,
+    snackbarInfos,
+    handleMySnackBar,
   } = usePassanger(user?.id)
 
-  const router = useRouter()
-
-  if (user === null) {
-    router.replace('/')
-  }
+  const hasActiveDisplacement = !!activeDisplacement
 
   return (
     <>
       <HeaderMenu />
       <Container maxWidth='xl'>
-        <Grid container display='flex' marginTop={14} >
+        <Grid container marginTop={14} >
           <Grid item sm={6} padding={2}>
             <Typography component='h1' variant="h4" sx={{ textTransform: 'capitalize' }}>
               Olá {user?.nome},
@@ -65,6 +66,7 @@ export default function PassangerPage({ user, drivers, vehicles } : InferGetServ
                   selectedValue={driverName}
                   setValueFunc={setDriverName}
                   setId={setDriverId}
+                  isDisabled={hasActiveDisplacement}
                 />
               </CardContent>
               <CardContent sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -75,6 +77,7 @@ export default function PassangerPage({ user, drivers, vehicles } : InferGetServ
                   selectedValue={carModel}
                   setValueFunc={setCarModel}
                   setId={setCarId}
+                  isDisabled={hasActiveDisplacement}
                 />
               </CardContent>
             </Card>
@@ -98,19 +101,29 @@ export default function PassangerPage({ user, drivers, vehicles } : InferGetServ
               </CardContent>
 
               <CardActions>
-                <Button variant="contained" disabled={isDisabled} onClick={handleStartDisplacement}>
+                <Button variant="contained" disabled={isDisabled || hasActiveDisplacement} onClick={handleStartDisplacement}>
                   Iniciar trajeto
                 </Button>
               </CardActions>
             </Card>
           </Grid>
         </Grid>
+
+        {!!activeDisplacement && (
+          <ActiveDisplacement
+            handleFinishDisplacement={handleFinishDisplacement}
+          />
+        )}
+
         <NotificationModal
-          handleModalClose={handleCloseModal}
           isModalOpen={isModalOpen}
-          modalDescription={errorMessage}
-          modalTitle="Ops, algo deu errado"
-          error
+          closeNotificationModal={closeNotificationModal}
+          modalInfos={modalInfos}
+        />
+        <MySnackBar
+          isOpen={isSnackbarOpen}
+          handleClose={handleMySnackBar}
+          snackbarInfos={snackbarInfos}
         />
       </Container>
     </>
