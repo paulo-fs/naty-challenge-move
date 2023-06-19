@@ -1,6 +1,6 @@
 export interface IDisplacementCreate {
   kmInicial: number;
-  inicioDeslocamento: Date;
+  inicioDeslocamento: string;
   checkList: string;
   motivo: string;
   observacao: string;
@@ -19,7 +19,7 @@ export interface IDisplacementRequiredData {
 export interface IDisplacementUpdate {
   id: string;
   kmFinal: number;
-  fimDeslocamento: Date;
+  fimDeslocamento: string;
   obervacao: string;
 }
 
@@ -31,12 +31,19 @@ export interface IDisplacement {
   id: string;
   kmInicial: number;
   kmFinal: number;
-  inicioDeslocamento: Date;
-  imDeslocamento: Date;
+  inicioDeslocamento: string;
+  fimDeslocamento: string | null;
   checkList: string;
   motivo: string;
   observacao: string;
   idCondutor: number;
   idVeiculo: number;
   idCliente: number;
+}
+
+export interface IDisplacementOnStore {
+  id: string;
+  userId: number;
+  startDisplacement: string;
+  endDisplacement: string | null;
 }
