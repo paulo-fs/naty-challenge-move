@@ -3,6 +3,7 @@ import { useLoginForm } from "./LoginForm.controller";
 import { NotificationModal } from "@/components";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Box, Button, FormControl, FormControlLabel, FormLabel, IconButton, InputAdornment, OutlinedInput, Radio, RadioGroup, TextField } from "@mui/material";
+import { RadioGroupClientDriver } from "@/components/RadioGroupClientDriver/RadioGroupClientDriver";
 
 export function LoginForm() {
   const {
@@ -51,18 +52,11 @@ export function LoginForm() {
       </Box>
 
       <Box marginTop={2}>
-        <FormLabel id='client-or-driver'>Deseja entrar como:</FormLabel>
-        <RadioGroup
-          aria-labelledby='client-or-driver'
-          defaultValue='passageiro'
-          name='radio-button-group'
-          row
+        <RadioGroupClientDriver
+          label="Deseja entrar como:"
           value={radioGroupValue}
           onChange={handleRadioGroupChange}
-        >
-          <FormControlLabel value='passageiro' control={<Radio />} label='Passageiro' />
-          <FormControlLabel value='motorista' control={<Radio />} label='Motorista' />
-        </RadioGroup>
+        />
       </Box>
 
       <Button

@@ -1,13 +1,16 @@
 import { useNotificationModal } from "@/components/NotificationModal/NotificationModal.controller";
+import { useRadioGroupClientDriver } from "@/components/RadioGroupClientDriver/RadioGroupClientDriver.controller";
 import { axiosApi } from "@/lib/axios";
 import { useRouter } from "next/router";
 import React from "react";
 
 export function useLoginForm() {
   const [showPassword, setShowPassword] = React.useState(false);
-  const [radioGroupValue, setRadioGroupValue] = React.useState("passageiro");
   const [userId, setUserId] = React.useState("");
   const [password, setPassword] = React.useState("");
+
+  const { radioGroupValue, handleRadioGroupChange } =
+    useRadioGroupClientDriver();
 
   const {
     closeNotificationModal,
@@ -25,10 +28,6 @@ export function useLoginForm() {
 
   function handleMouseDownPassword(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
-  }
-
-  function handleRadioGroupChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setRadioGroupValue((event.target as HTMLInputElement).value);
   }
 
   function handleIdInputChange(event: React.ChangeEvent<HTMLInputElement>) {

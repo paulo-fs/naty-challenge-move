@@ -37,7 +37,7 @@ export function Login() {
             </CardContent>
 
             <CardActions>
-              <Link href='/passanger' title='Quero me registrar'>
+              <Link href='/register' title='Quero me registrar'>
                 <Button variant='text' color='primary'>Quero me registrar</Button>
               </Link>
             </CardActions>
