@@ -12,7 +12,7 @@ export function saveDisplacementOnStore(
 
 export function recoverDisplacementOnStore(userId: string) {
   const storedItem = localStorage.getItem(`natyMove-userid:${userId}`);
-  if (!!storedItem) return null;
+  if (!storedItem) return null;
   const parsedData: IDisplacementOnStore = JSON.parse(storedItem!);
   return parsedData;
 }
