@@ -1,30 +1,24 @@
 import { AppBar, Toolbar, IconButton, Avatar, Button, Tooltip, Menu, MenuItem, Typography, Container, Box } from '@mui/material'
 import { Menu as MenuIcon, Bolt } from '@mui/icons-material'
-import { useState } from 'react'
 import Link from 'next/link'
+import { HeaderMenuProps } from './HeaderMenu.props'
+import { useHeaderMenu } from './HeaderMenu.controller'
 
-const pages = ['Teste 1', 'Teste 2']
-const settings = ['Teste 1', 'Teste 2']
+export function HeaderMenu(data: HeaderMenuProps) {
+  const { pages, settings } = data
+  const {
+    anchorElNav,
+    anchorElUser,
+    exitSetting,
+    handleCloseNavMenu,
+    handleCloseUserMenu,
+    handleOpenNavMenu,
+    handleOpenUserMenu
+  } = useHeaderMenu()
 
-export function HeaderMenu() {
-  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null)
-  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
-
-  function handleOpenNavMenu(event: React.MouseEvent<HTMLElement>) {
-    setAnchorElNav(event.currentTarget)
-  }
-
-  function handleCloseNavMenu() {
-    setAnchorElNav(null)
-  }
-
-  function handleOpenUserMenu(event: React.MouseEvent<HTMLElement>) {
-    setAnchorElUser(event.currentTarget)
-  }
-
-  function handleCloseUserMenu() {
-    setAnchorElUser(null)
-  }
+  const updateSettings = settings
+    ? [ ...settings, exitSetting ]
+    : [exitSetting]
 
   return (
     <AppBar position='fixed' variant='outlined' elevation={0} color='primary'>
@@ -62,9 +56,9 @@ export function HeaderMenu() {
               onClose={handleCloseNavMenu}
               sx={{ display: { xs: 'block', md: 'none'}, mt: 1 }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={() => console.log(page)}>
-                  <Typography>{page}</Typography>
+              {pages && pages.map((page) => (
+                <MenuItem key={page.title} onClick={() => console.log(page)}>
+                  <Typography>{page.title}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -72,10 +66,10 @@ export function HeaderMenu() {
 
           {/* menu desktop */}
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, marginLeft: 8, gap: 4 }}>
-            {pages.map((page) => (
-              <Link href={`/${page.toLowerCase()}`} key={page}>
+            {pages && pages.map((page) => (
+              <Link href={`/${page.url.toLowerCase()}`} key={page.title}>
                 <Button variant='text' sx={{ color: 'white', ":hover": { color: 'Highlight' } }}>
-                  { page }
+                  { page.title }
                 </Button>
               </Link>
             ))}
@@ -98,10 +92,10 @@ export function HeaderMenu() {
               open={!!anchorElUser}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <Link key={setting} href=''>
-                  <MenuItem>
-                    <Typography>{setting}</Typography>
+              {updateSettings && updateSettings.map((setting) => (
+                <Link key={setting.url} href={setting.url ?? ''}>
+                  <MenuItem onClick={setting.action}>
+                    <Typography>{setting.title}</Typography>
                   </MenuItem>
                 </Link>
               ))}
