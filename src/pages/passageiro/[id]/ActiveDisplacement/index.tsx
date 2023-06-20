@@ -1,11 +1,15 @@
+import { IDisplacementOnStore } from "@/dataTypes/displacement.dto";
 import { Box, Button, Card, CardActions, CardContent, Grid, Typography } from "@mui/material";
+import dayjs from "dayjs";
+import { Timer } from "../Timer/Timer";
 
 interface ActiveDisplacementProps {
   handleFinishDisplacement: () => Promise<void>
+  data: IDisplacementOnStore | null
 }
 
 export function ActiveDisplacement({
-  handleFinishDisplacement
+  handleFinishDisplacement, data
 }: ActiveDisplacementProps) {
   return (
     <Box marginTop={4}>
@@ -34,17 +38,17 @@ export function ActiveDisplacement({
                 <Typography>
                   Início do deslocamento
                 </Typography>
-                <Typography variant="h5">
-                  10:00
+                <Typography component='span' variant="h5">
+                  {dayjs(data?.startDisplacement).format('DD/MM [às] HH:mm')}
                 </Typography>
               </Box>
               <Box>
                 <Typography>
                   Tempo decorrido
                 </Typography>
-                <Typography variant="h5">
-                  01:00
-                </Typography>
+                  <Timer
+                    startDate={data?.startDisplacement}
+                  />
               </Box>
             </CardContent>
           </Card>

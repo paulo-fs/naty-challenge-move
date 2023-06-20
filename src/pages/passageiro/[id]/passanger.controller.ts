@@ -2,6 +2,7 @@ import { useMySnackBar } from "@/components/MySnackBar/MySnackBar.controller";
 import { useNotificationModal } from "@/components/NotificationModal/NotificationModal.controller";
 import { IDisplacementOnStore } from "@/dataTypes/displacement.dto";
 import {
+  recoverDisplacementOnStore,
   removeDisplacementOnStore,
   saveDisplacementOnStore,
 } from "@/helpers/displacementStore";
@@ -37,9 +38,9 @@ export function usePassanger(userId: string | undefined) {
   const router = useRouter();
   const isDisabled = driverName.length === 0 || carModel.length === 0;
 
-  if (userId === undefined) {
-    router.replace("/");
-  }
+  // if (userId === undefined) {
+  //   router.replace("/");
+  // }
 
   async function getActiveDisplacement(id: string) {
     const { displacement } = await getDisplacementById(id);
@@ -74,8 +75,9 @@ export function usePassanger(userId: string | undefined) {
       const message =
         err.response.data ??
         "Um erro desconhecido ocorreu, tente novamente mais tarde.";
+      removeDisplacementOnStore(userId!);
       defineNotificationModalInfos({
-        message: message,
+        message: message + " Recarregue a página e tente novamente.",
         title: "Ops, algo deu errado",
         error: true,
       });
@@ -97,9 +99,30 @@ export function usePassanger(userId: string | undefined) {
         message: "Deslocamento finalizado com sucesso.",
       });
     } catch (err: any) {
-      console.log(err.response.data);
+      const message =
+        err.response.data ??
+        "Um erro desconhecido ocorreu, tente novamente mais tarde.";
+      removeDisplacementOnStore(userId!);
+      defineNotificationModalInfos({
+        message: message + " Recarregue a página e tente novamente.",
+        title: "Ops, algo deu errado",
+        error: true,
+      });
     }
   }
+
+  React.useEffect(() => {
+    if (userId === undefined) {
+      router.replace("/");
+      return;
+    }
+    if (activeDisplacement) return;
+    const displacementOnStore = recoverDisplacementOnStore(userId);
+    if (displacementOnStore) {
+      setActiveDisplacement(displacementOnStore);
+      getActiveDisplacement(displacementOnStore.id);
+    }
+  }, [userId]);
 
   return {
     driverName,

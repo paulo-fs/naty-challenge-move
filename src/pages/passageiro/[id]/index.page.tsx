@@ -112,6 +112,7 @@ export default function PassangerPage({ user, drivers, vehicles } : InferGetServ
         {!!activeDisplacement && (
           <ActiveDisplacement
             handleFinishDisplacement={handleFinishDisplacement}
+            data={activeDisplacement}
           />
         )}
 
