@@ -38,26 +38,25 @@ export function usePassanger(userId: string | undefined) {
   const router = useRouter();
   const isDisabled = driverName.length === 0 || carModel.length === 0;
 
-  // if (userId === undefined) {
-  //   router.replace("/");
-  // }
-
   async function getActiveDisplacement(id: string) {
-    const { displacement } = await getDisplacementById(id);
-
-    defineMySnackbarInfos({
-      type: "success",
-      message: "Deslocamento iniciado com sucesso.",
-    });
-
-    const currentDisplacement = {
-      id: displacement.id,
-      userId: displacement.idCliente,
-      startDisplacement: displacement.inicioDeslocamento,
-      endDisplacement: displacement.fimDeslocamento,
-    };
-    saveDisplacementOnStore(currentDisplacement);
-    setActiveDisplacement(currentDisplacement);
+    try {
+      const { displacement } = await getDisplacementById(id);
+      defineMySnackbarInfos({
+        type: "success",
+        message: "Deslocamento iniciado com sucesso.",
+      });
+      const currentDisplacement = {
+        id: displacement.id,
+        userId: displacement.idCliente,
+        startDisplacement: displacement.inicioDeslocamento,
+        endDisplacement: displacement.fimDeslocamento,
+      };
+      saveDisplacementOnStore(currentDisplacement);
+      setActiveDisplacement(currentDisplacement);
+    } catch (err: any) {
+      removeDisplacementOnStore(userId!);
+      setActiveDisplacement(null);
+    }
   }
 
   async function handleStartDisplacement() {
@@ -75,12 +74,13 @@ export function usePassanger(userId: string | undefined) {
       const message =
         err.response.data ??
         "Um erro desconhecido ocorreu, tente novamente mais tarde.";
-      removeDisplacementOnStore(userId!);
       defineNotificationModalInfos({
         message: message + " Recarregue a página e tente novamente.",
         title: "Ops, algo deu errado",
         error: true,
       });
+      removeDisplacementOnStore(userId!);
+      setActiveDisplacement(null);
     }
   }
 
