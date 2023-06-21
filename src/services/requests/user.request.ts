@@ -11,6 +11,16 @@ export async function getUserById(id: string): Promise<{ user: IUser }> {
   return { user: data };
 }
 
-// export async function createUser(data: IUserCreate): Promise<string> {
+export async function createUser(
+  bodyData: IUserCreate
+): Promise<{ newUserId: string }> {
+  const { data } = await axiosApi({
+    method: "POST",
+    url: "/Cliente",
+    data: bodyData,
+  });
 
-// }
+  return {
+    newUserId: data,
+  };
+}

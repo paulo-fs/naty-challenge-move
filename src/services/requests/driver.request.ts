@@ -1,4 +1,8 @@
-import { IDriver, IDriverSelectInputData } from "@/dataTypes/driver.dto";
+import {
+  IDriver,
+  IDriverCreate,
+  IDriverSelectInputData,
+} from "@/dataTypes/driver.dto";
 import { axiosApi } from "@/lib/axios";
 
 export async function getDriversInputList(): Promise<{
@@ -14,5 +18,19 @@ export async function getDriversInputList(): Promise<{
 
   return {
     drivers,
+  };
+}
+
+export async function createDriver(
+  bodyData: IDriverCreate
+): Promise<{ driverId: string }> {
+  const { data } = await axiosApi({
+    method: "POST",
+    url: "/Condutor",
+    data: bodyData,
+  });
+
+  return {
+    driverId: data,
   };
 }
