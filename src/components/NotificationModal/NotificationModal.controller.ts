@@ -1,9 +1,11 @@
+import { useRouter } from "next/router";
 import React from "react";
 
 export interface INotificationModalInfos {
   error?: boolean;
   title: string;
   message: string;
+  redirect?: string;
 }
 
 export function useNotificationModal() {
@@ -12,9 +14,15 @@ export function useNotificationModal() {
     error: false,
     title: "",
     message: "",
+    redirect: undefined,
   });
 
+  const router = useRouter();
+
   function closeNotificationModal() {
+    if (modalInfos.redirect !== undefined) {
+      router.replace(modalInfos.redirect);
+    }
     setIsModalOpen(false);
   }
 
@@ -24,6 +32,7 @@ export function useNotificationModal() {
       error: data.error,
       title: data.title,
       message: data.message,
+      redirect: data.redirect,
     });
   }
 
