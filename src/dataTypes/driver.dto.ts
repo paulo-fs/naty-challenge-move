@@ -2,7 +2,7 @@ export interface IDriverCreate {
   nome: string;
   numeroHabilitacao: string;
   categoriaHabilitacao: string;
-  vencimentoHabilitacao: Date;
+  vencimentoHabilitacao: string;
 }
 
 export interface IDriverUpdate {
