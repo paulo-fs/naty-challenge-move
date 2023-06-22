@@ -1,17 +1,13 @@
 import Image from "next/image";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
-import { Box, Button, Card, CardActions, CardContent, Container, Grid, InputLabel, Menu, MenuItem, TextField, Typography } from "@mui/material";
-import { CustomSelect, HeaderMenu, MySnackBar, NotificationModal } from "@/components";
+import { Button, Card, CardActions, CardContent, CircularProgress, Container, FormControl, Grid, Menu, MenuItem, Typography } from "@mui/material";
+import { HeaderMenu, NotificationModal } from "@/components";
 
-import { getUserById } from "@/services/requests/user.request";
-import { getDriverById, getDriversInputList } from "@/services/requests/driver.request";
-import { IUser } from "@/dataTypes/passanger.dto";
-import { IDriver, IDriverSelectInputData } from "@/dataTypes/driver.dto";
+import { getDriverById } from "@/services/requests/driver.request";
+import { IDriver } from "@/dataTypes/driver.dto";
 
 import iconCar from '@/assets/icons/car.svg'
-import { getVehicleInputData } from "@/services/requests/vehicle.request";
-import { IVehicleSelectInputData } from "@/dataTypes/vehicle.dto";
 import { DriverForm } from "@/pages/register/DriverForm/DriverForm";
 import { useDriverPage } from "./DriverPage.controller";
 
@@ -55,55 +51,72 @@ export default function Driver({ driver } : InferGetServerSidePropsType<typeof g
         <Grid container marginTop={4}>
           <Grid item sm={6} paddingX={2}>
             <Card variant="outlined">
-              <CardContent>
-                <DriverForm
-                  control={control}
-                  errors={errors}
-                  hasLabel
-                  isDisabled={isDisabled}
-                  keepDisabled
-                />
-              </CardContent>
-              <CardActions>
-                {isDisabled
-                  ? (
-                    <>
-                      <Button variant="contained" onClick={() => handleAbleDisableForm()}>
-                        Editar perfil
-                      </Button>
-                      <Button variant="outlined"
-                        id='delte-button'
-                        aria-controls={openDeleteMenu ? 'delete-menu' : undefined}
-                        aria-haspopup='true'
-                        aria-expanded={openDeleteMenu ? 'true' : undefined}
-                        onClick={handleOpenDeleteMenu}
-                      >
-                        Excluir perfil
-                      </Button>
-                      <Menu
-                        id='delete-menu'
-                        anchorEl={anchorEl}
-                        open={openDeleteMenu}
-                        onClose={handleCloseDeleteMenu}
-                        MenuListProps={{ 'aria-labelledby': 'delete-button' }}
-                      >
-                        <MenuItem onClick={deleteThisDriver}>Confirmar Exclusão</MenuItem>
-                        <MenuItem onClick={handleCloseDeleteMenu}>Cancelar</MenuItem>
-                      </Menu>
-                    </>
-                  )
-                  : (
-                    <>
-                      <Button variant="contained" >
-                        Salvar alterações
-                      </Button>
-                      <Button variant="outlined" onClick={() => handleAbleDisableForm()}>
-                        Cancelar
-                      </Button>
-                    </>
-                  )
-                }
-              </CardActions>
+              <FormControl component='form' onSubmit={handleSubmit(updateDriverInfos)}>
+                <CardContent>
+                  <Grid container>
+                    <DriverForm
+                      control={control}
+                      errors={errors}
+                      isDisabled={isDisabled}
+                      keepDisabled
+                    />
+                  </Grid>
+                </CardContent>
+                <CardActions>
+                  {isDisabled
+                    ? (
+                      <>
+                        <Button
+                          variant="contained"
+                          type="submit"
+                          onClick={() => handleAbleDisableForm()}
+                          fullWidth
+                        >
+                          Editar perfil
+                        </Button>
+                        <Button variant="outlined"
+                          id='delte-button'
+                          aria-controls={openDeleteMenu ? 'delete-menu' : undefined}
+                          aria-haspopup='true'
+                          aria-expanded={openDeleteMenu ? 'true' : undefined}
+                          onClick={handleOpenDeleteMenu}
+                          fullWidth
+                        >
+                          Excluir perfil
+                        </Button>
+                        <Menu
+                          id='delete-menu'
+                          anchorEl={anchorEl}
+                          open={openDeleteMenu}
+                          onClose={handleCloseDeleteMenu}
+                          MenuListProps={{ 'aria-labelledby': 'delete-button' }}
+                        >
+                          <MenuItem onClick={deleteThisDriver} disabled={isSubmitting}>
+                            {isSubmitting
+                              ? <CircularProgress size={24} />
+                              : 'Confirmar exclusão'
+                            }
+                          </MenuItem>
+                          <MenuItem onClick={handleCloseDeleteMenu} disabled={isSubmitting}>Cancelar</MenuItem>
+                        </Menu>
+                      </>
+                    )
+                    : (
+                      <>
+                        <Button variant="contained" onClick={handleSubmit(updateDriverInfos)} disabled={isSubmitting} fullWidth>
+                          {isSubmitting
+                            ? <CircularProgress size={24} />
+                            : 'Salvar alterações'
+                          }
+                        </Button>
+                        <Button variant="outlined" onClick={() => handleAbleDisableForm()} disabled={isSubmitting} fullWidth>
+                          Cancelar
+                        </Button>
+                      </>
+                    )
+                  }
+                </CardActions>
+              </FormControl>
             </Card>
           </Grid>
 
