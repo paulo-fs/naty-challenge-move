@@ -25,11 +25,11 @@ export function useDriverPage(driver: IDriver | null) {
   const menuLinks: IMenuLink[] = [
     {
       title: "Perfil",
-      url: `/motorista/${driver?.id}`,
+      url: `motorista/${driver?.id}`,
     },
     {
       title: "Deslocamentos",
-      url: `/motorista/deslocamento/${driver?.id}`,
+      url: `motorista/deslocamento/${driver?.id}`,
     },
   ];
 
