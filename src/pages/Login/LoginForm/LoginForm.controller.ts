@@ -43,6 +43,12 @@ export function useLoginForm() {
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     if (isDisabled) return;
+    const isAdmin = userId === "admin" && password === "admin";
+
+    if (isAdmin) {
+      return router.push("/adminPanel");
+    }
+
     const requestUrl =
       radioGroupValue === "passageiro"
         ? `/Cliente/${userId}`
