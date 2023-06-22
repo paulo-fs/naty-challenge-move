@@ -50,6 +50,15 @@ type FinishProps = {
   obervacao?: string;
 };
 
+export async function getAllDisplacements(): Promise<{
+  displacements: IDisplacement[];
+}> {
+  const { data } = await axiosApi.get("/Deslocamento");
+  return {
+    displacements: data,
+  };
+}
+
 export async function finishDisplacement(finishData: FinishProps) {
   const bodyData: IDisplacementUpdate = {
     id: finishData.id,
