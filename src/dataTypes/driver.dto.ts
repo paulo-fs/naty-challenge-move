@@ -8,15 +8,19 @@ export interface IDriverCreate {
 export interface IDriverUpdate {
   id: string;
   categoriaHabilitacao: string;
-  vencimentoHabilitacao: Date;
+  vencimentoHabilitacao: string;
 }
 
 export interface IDriverDelete {
   id: string;
 }
 
-export interface IDriver extends IDriverCreate {
+export interface IDriver {
   id: string;
+  nome: string;
+  numeroHabilitacao: string;
+  catergoriaHabilitacao: string;
+  vencimentoHabilitacao: string;
 }
 
 export interface IDriverSelectInputData {
