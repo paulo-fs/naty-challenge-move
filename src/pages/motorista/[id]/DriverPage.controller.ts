@@ -1,3 +1,4 @@
+import { IMenuLink } from "@/components/HeaderMenu/HeaderMenu.props";
 import { useNotificationModal } from "@/components/NotificationModal/NotificationModal.controller";
 import { IDriver, IDriverUpdate } from "@/dataTypes/driver.dto";
 import { useDriverForm } from "@/pages/register/DriverForm/DriverForm.controller";
@@ -20,6 +21,17 @@ export function useDriverPage(driver: IDriver | null) {
     isModalOpen,
     modalInfos,
   } = useNotificationModal();
+
+  const menuLinks: IMenuLink[] = [
+    {
+      title: "Perfil",
+      url: `/motorista/${driver?.id}`,
+    },
+    {
+      title: "Deslocamentos",
+      url: `/motorista/deslocamento/${driver?.id}`,
+    },
+  ];
 
   const { driverFormSchema, isDisabled, handleAbleDisableForm } =
     useDriverForm();
@@ -108,6 +120,7 @@ export function useDriverPage(driver: IDriver | null) {
   }, []);
 
   return {
+    menuLinks,
     control,
     handleSubmit,
     updateDriverInfos,

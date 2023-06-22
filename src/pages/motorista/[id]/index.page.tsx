@@ -12,6 +12,7 @@ import { getAllDisplacements } from "@/services/requests/displacement.request";
 
 export default function Driver({ driver, dashboard } : InferGetServerSidePropsType<typeof getServerSideProps>) {
   const {
+    menuLinks,
     control,
     handleSubmit,
     errors,
@@ -31,7 +32,7 @@ export default function Driver({ driver, dashboard } : InferGetServerSidePropsTy
 
   return (
     <>
-      <HeaderMenu />
+      <HeaderMenu pages={menuLinks} />
       <Container maxWidth='xl'>
         {/* description */}
         <Grid container marginTop={14} >
