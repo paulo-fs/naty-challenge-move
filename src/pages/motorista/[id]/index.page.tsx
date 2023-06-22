@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
 import { Button, Card, CardActions, CardContent, CircularProgress, Container, FormControl, Grid, Menu, MenuItem, Typography } from "@mui/material";
@@ -7,11 +6,11 @@ import { HeaderMenu, NotificationModal } from "@/components";
 import { getDriverById } from "@/services/requests/driver.request";
 import { IDriver } from "@/dataTypes/driver.dto";
 
-import iconCar from '@/assets/icons/car.svg'
 import { DriverForm } from "@/pages/register/DriverForm/DriverForm";
 import { useDriverPage } from "./DriverPage.controller";
+import { getAllDisplacements } from "@/services/requests/displacement.request";
 
-export default function Driver({ driver } : InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function Driver({ driver, dashboard } : InferGetServerSidePropsType<typeof getServerSideProps>) {
   const {
     control,
     handleSubmit,
@@ -34,6 +33,7 @@ export default function Driver({ driver } : InferGetServerSidePropsType<typeof g
     <>
       <HeaderMenu />
       <Container maxWidth='xl'>
+        {/* description */}
         <Grid container marginTop={14} >
           <Grid item sm={6} padding={2}>
             <Typography component='h1' variant="h4" sx={{ textTransform: 'capitalize' }}>
@@ -43,13 +43,12 @@ export default function Driver({ driver } : InferGetServerSidePropsType<typeof g
               Este é o seu perfil como condutor da Move. Você pode editar ou excluir seu perfil, caso desejar.
             </Typography>
           </Grid>
-            <Grid item sm={6} paddingX={2}>
-              <Image src={iconCar} alt='' style={{ opacity: 0.3 }} width={120} />
-            </Grid>
         </Grid>
 
+        {/* content */}
         <Grid container marginTop={4}>
-          <Grid item sm={6} paddingX={2}>
+          {/* driver infos */}
+          <Grid item sm={8} paddingX={2}>
             <Card variant="outlined">
               <FormControl component='form' onSubmit={handleSubmit(updateDriverInfos)}>
                 <CardContent>
@@ -120,12 +119,34 @@ export default function Driver({ driver } : InferGetServerSidePropsType<typeof g
             </Card>
           </Grid>
 
-          <Grid item sm={6} paddingX={2}>
-            <Card elevation={0} sx={{ height: '100%' }}>
-              <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-
-              </CardContent>
-            </Card>
+          {/* dashboard */}
+          <Grid item sm={4} paddingX={2}>
+            <Grid container direction='column' gap={1}>
+              <Grid item>
+                <Card variant="outlined">
+                  <CardContent sx={{ display: 'flex', flexDirection: 'column' }}>
+                    <Typography variant="body2">Total Deslocamentos</Typography>
+                    <Typography variant="h5" color='primary'>{dashboard.total}</Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item>
+                <Card variant="outlined">
+                  <CardContent sx={{ display: 'flex', flexDirection: 'column' }}>
+                    <Typography variant="body2">Total Concluídos</Typography>
+                    <Typography variant="h5" color='primary'>{dashboard.finished}</Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item>
+                <Card variant="outlined">
+                  <CardContent sx={{ display: 'flex', flexDirection: 'column' }}>
+                    <Typography variant="body2">Total Não concluídos ou Cancelados</Typography>
+                    <Typography variant="h5" color='primary'>{dashboard.unfinished}</Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
 
@@ -141,6 +162,11 @@ export default function Driver({ driver } : InferGetServerSidePropsType<typeof g
 
 export const getServerSideProps: GetServerSideProps<{
   driver: IDriver | null;
+  dashboard: {
+    total: number;
+    finished: number;
+    unfinished: number;
+  }
 }> = async ({ req, res, params }) => {
   res.setHeader(
     "Cache-Control",
@@ -150,19 +176,34 @@ export const getServerSideProps: GetServerSideProps<{
   const driverId = String(params?.id);
 
   try {
-    console.log('entrou')
     const { driver } = await getDriverById(driverId);
-    console.log(driver)
+    const { displacements } = await getAllDisplacements()
+
+    const total = displacements.filter(item => String(item.idCondutor) === driverId)
+    const finished = total.filter(item => item.kmFinal)
+    const unfinished = total.filter(item => !item.kmFinal)
+
+    const driverDisplacements = {
+      total: total.length,
+      finished: finished.length,
+      unfinished: unfinished.length
+    }
 
     return {
       props: {
-        driver
+        driver,
+        dashboard: driverDisplacements
       },
     };
   } catch (err) {
     return {
       props: {
         driver: null,
+        dashboard: {
+          total: 0,
+          finished: 0,
+          unfinished: 0
+        }
       },
     };
   }
