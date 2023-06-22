@@ -57,7 +57,7 @@ export function HeaderMenu(data: HeaderMenuProps) {
               sx={{ display: { xs: 'block', md: 'none'}, mt: 1 }}
             >
               {pages && pages.map((page) => (
-                <MenuItem key={page.title} onClick={() => console.log(page)}>
+                <MenuItem key={page.title}>
                   <Typography>{page.title}</Typography>
                 </MenuItem>
               ))}
@@ -93,7 +93,7 @@ export function HeaderMenu(data: HeaderMenuProps) {
               onClose={handleCloseUserMenu}
             >
               {updateSettings && updateSettings.map((setting) => (
-                <Link key={setting.url} href={setting.url ?? ''}>
+                <Link key={setting.url} href={setting.url ?? ''} prefetch>
                   <MenuItem onClick={setting.action}>
                     <Typography>{setting.title}</Typography>
                   </MenuItem>
