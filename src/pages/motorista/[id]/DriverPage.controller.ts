@@ -62,11 +62,11 @@ export function useDriverPage(driver: IDriver | null) {
       vencimentoHabilitacao: data.vencimentoHabilitacao,
     };
 
-    if (driver === null) {
+    if (!driver) {
       defineNotificationModalInfos({
         title: "Ops, existe algo errado",
         message:
-          "Existe algo com este usuário, esta conta parece não existir, por favor, relogue e tente novamente",
+          "Existe algo de errado com este usuário, esta conta parece não existir, por favor, relogue e tente novamente",
         error: true,
         redirect: "/",
       });
