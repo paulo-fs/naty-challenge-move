@@ -1,6 +1,9 @@
+import React from "react";
 import { z } from "zod";
 
 export function useDriverForm() {
+  const [isDisabled, setIsDisabled] = React.useState(true);
+
   const driverFormSchema = z.object({
     nome: z
       .string()
@@ -31,8 +34,14 @@ export function useDriverForm() {
     vencimentoHabilitacao: "",
   };
 
+  function handleAbleDisableForm(state?: boolean) {
+    setIsDisabled(state ?? !isDisabled);
+  }
+
   return {
     driverFormSchema,
     defaultDriverValues,
+    isDisabled,
+    handleAbleDisableForm,
   };
 }
