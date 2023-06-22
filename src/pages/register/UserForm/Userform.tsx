@@ -12,6 +12,7 @@ export function UserForm(props: any) {
             control={control}
             render={({ field }) => (
               <TextField placeholder="Nome e sobrenome" fullWidth {...field}
+                label='Nome e sobrenome'
                 error={!!errors.nome?.message}
                 helperText={errors.nome?.message}
               />
@@ -25,6 +26,7 @@ export function UserForm(props: any) {
           control={control}
           render={({ field }) => (
             <TextField placeholder="Número do documento" fullWidth {...field}
+              label='Número do documento'
               error={!!errors.numeroDocumento?.message}
               helperText={errors.numeroDocumento?.message}
             />
@@ -37,6 +39,7 @@ export function UserForm(props: any) {
             control={control}
             render={({ field }) => (
               <TextField placeholder="Tipo" fullWidth {...field}
+                label='Tipo'
                 error={!!errors.tipoDocumento?.message}
                 helperText={errors.tipoDocumento?.message}
               />
@@ -50,6 +53,7 @@ export function UserForm(props: any) {
             control={control}
             render={({ field }) => (
               <TextField placeholder="Seu endereço" fullWidth {...field}
+                label='Seu endereço'
                 error={!!errors.logradouro?.message}
                 helperText={errors.logradouro?.message}
               />
@@ -63,6 +67,7 @@ export function UserForm(props: any) {
             control={control}
             render={({ field }) => (
               <TextField placeholder="Bairro" fullWidth {...field}
+                label='Bairro'
                 error={!!errors.bairro?.message}
                 helperText={errors.bairro?.message}
               />
@@ -75,6 +80,7 @@ export function UserForm(props: any) {
             control={control}
             render={({ field }) => (
               <TextField placeholder="Número" fullWidth {...field}
+                label='Número'
                 error={!!errors.numero?.message}
                 helperText={errors.numero?.message}
               />
@@ -88,6 +94,7 @@ export function UserForm(props: any) {
             control={control}
             render={({ field }) => (
               <TextField placeholder="Cidade" fullWidth {...field}
+                label='Cidade'
                 error={!!errors.cidade?.message}
                 helperText={errors.cidade?.message}
               />
@@ -100,6 +107,7 @@ export function UserForm(props: any) {
             control={control}
             render={({ field }) => (
               <TextField placeholder="Estado" fullWidth {...field}
+                label='UF'
                 error={!!errors.uf?.message}
                 helperText={errors.uf?.message}
               />
