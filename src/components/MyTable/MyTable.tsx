@@ -7,7 +7,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import { Typography } from '@mui/material';
+import { IconButton, Menu, MenuItem, Typography } from '@mui/material';
+import { MoreVert } from '@mui/icons-material';
 
 interface Column {
   label: string
@@ -17,12 +18,31 @@ interface Column {
 interface MyTableProps {
   tableHead: Column[]
   data: any[]
+  renderActions?: IRenderAction[]
+}
+
+interface IRenderAction {
+  label: string
+  action: (id: string) => Promise<any>
 }
 
 export function MyTable(props: MyTableProps) {
-  const { tableHead, data} = props
+  const { tableHead, data, renderActions} = props
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [rowId, setRowId] = React.useState('')
+  const isMenuOpen = Boolean(anchorEl);
+  const hasActions = Boolean(renderActions)
+
+  const handleOpenMenu = (event: React.MouseEvent<HTMLButtonElement>, id: string) => {
+    setAnchorEl(event.currentTarget)
+    setRowId(id)
+  }
+
+  const handleCloseMenu = () => {
+    setAnchorEl(null)
+  }
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -52,6 +72,13 @@ export function MyTable(props: MyTableProps) {
                   </Typography>
                 </TableCell>
               ))}
+              {hasActions && (
+              <TableCell>
+                <Typography variant='overline' color='primary'>
+                    Ações
+                  </Typography>
+              </TableCell>
+            )}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -66,6 +93,19 @@ export function MyTable(props: MyTableProps) {
                         </TableCell>
                     )
                   }
+                )}
+                {hasActions && (
+                  <TableCell>
+                    <IconButton
+                      id='action-button'
+                      aria-controls={isMenuOpen ? 'table-actions-menu' : undefined}
+                      aria-haspopup='true'
+                      aria-expanded={isMenuOpen ? 'true' : undefined}
+                      onClick={(event) => handleOpenMenu(event, row.id)}
+                    >
+                      <MoreVert />
+                    </IconButton>
+                  </TableCell>
                 )}
                 </TableRow>
               ))
@@ -82,6 +122,31 @@ export function MyTable(props: MyTableProps) {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
+      <Menu
+        id='table-actions-menu'
+        anchorEl={anchorEl}
+        open={isMenuOpen}
+        onClose={handleCloseMenu}
+        MenuListProps={{
+          'aria-labelledby': 'action-button'
+        }}
+        anchorOrigin={{
+          vertical: 'center',
+          horizontal: 'left',
+        }}
+        transformOrigin={{
+          vertical: 'center',
+          horizontal: 'right'
+        }}
+      >
+        {renderActions?.map((action, i) => {
+          return (
+            <MenuItem key={i} onClick={() => action.action(rowId)}>
+              {action.label}
+            </MenuItem>
+          )
+        })}
+      </Menu>
     </Paper>
   )
 }
