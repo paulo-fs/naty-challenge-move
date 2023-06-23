@@ -126,6 +126,7 @@ export function useVeiclePanel(vehicles: IVehicle[] | null) {
         redirect: `/adminpanel/vehicles`,
       });
     } catch (err: any) {
+      handleCloseConfirmModal();
       defineNotificationModalInfos({
         title: "Ops!",
         message: `Talvez este veículo já tenha sido excluído, recarregue a página.`,
