@@ -1,4 +1,8 @@
-import { IVehicle, IVehicleSelectInputData } from "@/dataTypes/vehicle.dto";
+import {
+  IVehicle,
+  IVehicleCreate,
+  IVehicleSelectInputData,
+} from "@/dataTypes/vehicle.dto";
 import { axiosApi } from "@/lib/axios";
 
 export async function getVehicleInputData(): Promise<{
@@ -22,4 +26,12 @@ export async function getAllVehicles(): Promise<{ vehicles: IVehicle[] }> {
   return {
     vehicles: data,
   };
+}
+
+export async function createVehicle(vehicle: IVehicleCreate): Promise<void> {
+  await axiosApi({
+    method: "POST",
+    url: "/Veiculo",
+    data: vehicle,
+  });
 }
