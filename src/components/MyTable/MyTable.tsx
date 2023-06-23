@@ -141,7 +141,10 @@ export function MyTable(props: MyTableProps) {
       >
         {renderActions?.map((action, i) => {
           return (
-            <MenuItem key={i} onClick={() => action.action(rowId)}>
+            <MenuItem key={i} onClick={() => {
+              handleCloseMenu()
+              action.action(rowId)
+            }}>
               {action.label}
             </MenuItem>
           )
