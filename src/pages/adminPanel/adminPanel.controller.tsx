@@ -4,23 +4,23 @@ export function useAdminPanel() {
   const menuLinks: IMenuLink[] = [
     {
       title: "Painel",
-      url: '/adminPanel',
+      url: '/adminpanel',
     },
     {
       title: "Clientes",
-      url: '/users',
+      url: '/adminpanel/users',
     },
     {
       title: "Motoristas",
-      url: '/drivers',
+      url: '/adminpanel/drivers',
     },
     {
       title: "Deslocamentos",
-      url: '/displacements',
+      url: '/adminpanel/displacements',
     },
     {
       title: "Veículos",
-      url: '/vehicles',
+      url: '/adminpanel/vehicles',
     },
   ];
 

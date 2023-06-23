@@ -46,7 +46,7 @@ export function useLoginForm() {
     const isAdmin = userId === "admin" && password === "admin";
 
     if (isAdmin) {
-      return router.push("/adminPanel");
+      return router.push("/adminpanel");
     }
 
     const requestUrl =

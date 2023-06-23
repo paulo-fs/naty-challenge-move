@@ -1,16 +1,15 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
-import { Box, Card, CardContent, Container, Divider, Grid, Typography } from "@mui/material";
+import { Card, CardContent, Container, Divider, Grid, Typography } from "@mui/material";
 import { HeaderMenu } from "@/components";
-
-import { getAllDrivers } from "@/services/requests/driver.request";
-
-import { getAllDisplacements } from "@/services/requests/displacement.request";
 import { useAdminPanel } from "./adminPanel.controller";
-import { getAllUsers } from "@/services/requests/user.request";
-import { getAllVehicles } from "@/services/requests/vehicle.request";
 import { DashboardItemContainer } from "./components/dashboard/DashboardItemContainer";
 import { DashboardItem } from "./components/dashboard/DashboardItem";
+
+import { getAllDrivers } from "@/services/requests/driver.request";
+import { getAllDisplacements } from "@/services/requests/displacement.request";
+import { getAllUsers } from "@/services/requests/user.request";
+import { getAllVehicles } from "@/services/requests/vehicle.request";
 
 export default function AdminPanel({ dashboard } : InferGetServerSidePropsType<typeof getServerSideProps>) {
   const {
