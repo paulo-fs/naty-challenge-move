@@ -5,26 +5,26 @@ export function useVehicleForm() {
   const [isDisabled, setIsDisabled] = React.useState(true);
 
   const vehicleFormSchema = z.object({
-    marcaModelo: z
+    marcaModelo: z.coerce
       .string()
       .min(2, "É necessário ter pelo menos 3 caracteres")
       .max(30, "É permitido apenas 30 caracteres para nome"),
-    anoFabricacao: z
+    anoFabricacao: z.coerce
       .string()
-      .min(2, "Necessário ter pelo menos 2 caracteres")
+      .min(1, "Necessário ter pelo menos 2 caracteres")
       .max(4, "É permitido apenas 4 caracteres para documento")
       .regex(new RegExp("[0-9]"), "É permitido apenas números")
-      .transform((value) => Number(value)),
-    placa: z
+      .transform((value) => Number(value.slice(0, 4))),
+    placa: z.coerce
       .string()
-      .min(5, "Necessário ter pelo menos 5 caractere")
-      .max(8, "Máximo de 8 caracteres"),
-    kmAtual: z
+      .min(2, "Necessário ter pelo menos 2 caractere")
+      .max(10, "Máximo de 10 caracteres"),
+    kmAtual: z.coerce
       .string()
       .min(1, "Se não possui kilometragem, preencha com 0.")
       .max(7, "Este veículo está inadequado para o uso na plataforma")
       .regex(new RegExp("[0-9]"), "É permitido apenas números")
-      .transform((value) => Number(value)),
+      .transform((value) => Number(value.slice(0, 7))),
   });
 
   const defaultVehicleFormSchema = {
