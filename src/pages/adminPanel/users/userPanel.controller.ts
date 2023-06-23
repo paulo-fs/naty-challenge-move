@@ -82,14 +82,14 @@ export function useUserPanel(users: IUser[] | null) {
       handleCloseConfirmModal();
       defineNotificationModalInfos({
         title: "Sucesso!",
-        message: `Veículo excluído com sucesso.`,
+        message: `Usuário excluído com sucesso.`,
         redirect: `/adminpanel/users`,
       });
     } catch (err: any) {
       handleCloseConfirmModal();
       defineNotificationModalInfos({
         title: "Ops!",
-        message: `Talvez este veículo já tenha sido excluído, recarregue a página.`,
+        message: `Talvez este usuário já tenha sido excluído, recarregue a página.`,
         redirect: `/adminpanel/users`,
       });
     }
