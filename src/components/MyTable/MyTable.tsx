@@ -23,7 +23,7 @@ interface MyTableProps {
 
 interface IRenderAction {
   label: string
-  action: (id: string) => Promise<any>
+  action: (id: string) => void
 }
 
 export function MyTable(props: MyTableProps) {
@@ -35,9 +35,8 @@ export function MyTable(props: MyTableProps) {
   const isMenuOpen = Boolean(anchorEl);
   const hasActions = Boolean(renderActions)
 
-  const handleOpenMenu = (event: React.MouseEvent<HTMLButtonElement>, id: string) => {
+  const handleOpenMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
-    setRowId(id)
   }
 
   const handleCloseMenu = () => {
@@ -101,7 +100,10 @@ export function MyTable(props: MyTableProps) {
                       aria-controls={isMenuOpen ? 'table-actions-menu' : undefined}
                       aria-haspopup='true'
                       aria-expanded={isMenuOpen ? 'true' : undefined}
-                      onClick={(event) => handleOpenMenu(event, row.id)}
+                      onClick={(event) => {
+                        handleOpenMenu(event)
+                        setRowId(row.id)
+                      }}
                     >
                       <MoreVert />
                     </IconButton>

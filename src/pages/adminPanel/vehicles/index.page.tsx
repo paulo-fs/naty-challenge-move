@@ -1,20 +1,33 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
-import { Button, Container, Grid, TextField, Typography } from "@mui/material";
-import { HeaderMenu, MyTable } from "@/components";
+import { Button, Container, Grid, MenuItem, TextField, Typography } from "@mui/material";
+import { ConfirmModal, FormModal, HeaderMenu, MyTable, NotificationModal } from "@/components";
 
-import { IDriver } from "@/dataTypes/driver.dto";
-import { getAllDrivers } from "@/services/requests/driver.request";
 import { useVeiclePanel } from "./vehiclePanel.controller";
 import { getAllVehicles } from "@/services/requests/vehicle.request";
 import { IVehicle } from "@/dataTypes/vehicle.dto";
 import Link from "next/link";
 import { menuLinks } from "@/constants/adminPanelLinks";
+import { VehicleForm } from "./register/VehicleForm/VehicleForm";
 
 export default function VehiclesPanel({ vehicles } : InferGetServerSidePropsType<typeof getServerSideProps>) {
   const {
     tableHead,
     tableData,
+    tableActions,
+    isFormModalOpen,
+    handleOpenCloseFormModal,
+    handleSubmit,
+    submitForm,
+    isSubmitting,
+    errors,
+    control,
+    isModalOpen,
+    closeNotificationModal,
+    modalInfos,
+    confirmModalState,
+    handleCloseConfirmModal,
+    deleteVehicleRequest,
   } = useVeiclePanel(vehicles)
 
   return (
@@ -41,7 +54,7 @@ export default function VehiclesPanel({ vehicles } : InferGetServerSidePropsType
             <TextField fullWidth placeholder="Busque por..." size="small" />
           </Grid>
 
-          <Grid item xs={2} paddingX={2} marginBottom={4} direction='row'>
+          <Grid item xs={2} paddingX={2} marginBottom={4}>
               <Button variant="outlined" fullWidth>
                 Limpar busca
               </Button>
@@ -58,8 +71,34 @@ export default function VehiclesPanel({ vehicles } : InferGetServerSidePropsType
           <MyTable
             tableHead={tableHead}
             data={tableData ?? []}
+            renderActions={tableActions}
           />
         </Grid>
+
+        <FormModal
+          isOpen={isFormModalOpen}
+          handleModal={handleOpenCloseFormModal}
+          handleSubmit={handleSubmit}
+          submitFunc={submitForm}
+        >
+          <VehicleForm
+            control={control}
+            errors={errors}
+            keepDisabled
+          />
+        </FormModal>
+
+        <ConfirmModal
+          action={deleteVehicleRequest}
+          confirmModalState={confirmModalState}
+          handleCloseConfirmModal={handleCloseConfirmModal}
+        />
+
+        <NotificationModal
+          isModalOpen={isModalOpen}
+          modalInfos={modalInfos}
+          closeNotificationModal={closeNotificationModal}
+        />
       </Container>
     </>
   )
