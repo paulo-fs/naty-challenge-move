@@ -1,6 +1,9 @@
 import { IUser } from "@/dataTypes/passanger.dto";
+import React from "react";
 
 export function useUserPanel(users: IUser[] | null) {
+  const [searchInputValue, setSearchInputValue] = React.useState("");
+
   const tableHead = [
     { label: "id" },
     { label: "Nome" },
@@ -9,6 +12,13 @@ export function useUserPanel(users: IUser[] | null) {
     { label: "Cidade" },
     { label: "UF" },
   ];
+
+  // const tableActions = [
+  //   {
+  //     label: "Excluir",
+  //     action: openConfirmModal,
+  //   },
+  // ];
 
   const tableData = users?.map((item) => {
     return {
@@ -21,8 +31,40 @@ export function useUserPanel(users: IUser[] | null) {
     };
   });
 
+  const filteredTableData = search();
+
+  function search() {
+    if (!searchInputValue) return;
+    const result = tableData?.filter((item) => {
+      return (
+        item.nome.toLowerCase().includes(searchInputValue.toLowerCase()) ||
+        item.numeroDocumento
+          .toLowerCase()
+          .includes(searchInputValue.toLowerCase()) ||
+        item.tipoDocumento
+          .toLowerCase()
+          .includes(searchInputValue.toLowerCase()) ||
+        item.cidade.toLowerCase().includes(searchInputValue.toLowerCase()) ||
+        item.uf.toLowerCase().includes(searchInputValue.toLowerCase())
+      );
+    });
+    return result;
+  }
+
+  function clearSearchInput() {
+    setSearchInputValue("");
+  }
+
+  function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
+    setSearchInputValue(event.target.value);
+  }
+
   return {
     tableHead,
     tableData,
+    filteredTableData,
+    searchInputValue,
+    handleSearch,
+    clearSearchInput,
   };
 }

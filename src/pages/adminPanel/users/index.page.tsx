@@ -1,7 +1,7 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
 import { Card, CardContent, Container, Divider, Grid, Typography } from "@mui/material";
-import { HeaderMenu, MyTable } from "@/components";
+import { HeaderMenu, MyTable, SearchInput } from "@/components";
 
 import { getAllUsers } from "@/services/requests/user.request";
 import { IUser } from "@/dataTypes/passanger.dto";
@@ -12,6 +12,10 @@ export default function UsersPanel({ users } : InferGetServerSidePropsType<typeo
   const {
     tableHead,
     tableData,
+    filteredTableData,
+    searchInputValue,
+    handleSearch,
+    clearSearchInput,
   } = useUserPanel(users)
 
   return (
@@ -34,9 +38,17 @@ export default function UsersPanel({ users } : InferGetServerSidePropsType<typeo
 
         {/* content */}
         <Grid container marginTop={4} paddingX={4}>
+          <Grid item xs={12}>
+            <SearchInput
+              clearSearchInput={clearSearchInput}
+              handleSearch={handleSearch}
+              searchInputValue={searchInputValue}
+            />
+          </Grid>
+
           <MyTable
             tableHead={tableHead}
-            data={tableData ?? []}
+            data={filteredTableData ?? tableData ?? []}
           />
         </Grid>
       </Container>
