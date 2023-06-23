@@ -108,7 +108,6 @@ export function useVeiclePanel(vehicles: IVehicle[] | null) {
   async function getVehicleData(id: string) {
     try {
       const { vehicle } = await getVehicleById(id);
-      setVehicleId(id);
       setFormValues(vehicle);
       handleOpenCloseFormModal();
       console.log("vehicle >>>", vehicle);
@@ -120,7 +119,6 @@ export function useVeiclePanel(vehicles: IVehicle[] | null) {
   async function deleteVehicleRequest() {
     try {
       await deleteVehicle({ id: vehicleId });
-      console.log(vehicleId);
       handleCloseConfirmModal();
       defineNotificationModalInfos({
         title: "Sucesso!",
@@ -177,6 +175,8 @@ export function useVeiclePanel(vehicles: IVehicle[] | null) {
     confirmModalState,
     handleCloseConfirmModal,
     deleteVehicleRequest,
+    setVehicleId,
+    vehicleId,
     filteredTableData,
     searchInputValue,
     handleSearch,

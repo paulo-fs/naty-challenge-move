@@ -1,7 +1,7 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
 import { Card, CardContent, Container, Divider, Grid, Typography } from "@mui/material";
-import { HeaderMenu, MyTable, SearchInput } from "@/components";
+import { ConfirmModal, HeaderMenu, MyTable, NotificationModal, SearchInput } from "@/components";
 
 import { getAllUsers } from "@/services/requests/user.request";
 import { IUser } from "@/dataTypes/passanger.dto";
@@ -12,10 +12,17 @@ export default function UsersPanel({ users } : InferGetServerSidePropsType<typeo
   const {
     tableHead,
     tableData,
+    tableActions,
     filteredTableData,
     searchInputValue,
     handleSearch,
     clearSearchInput,
+    confirmModalState,
+    handleCloseConfirmModal,
+    deleteUserRequest,
+    isModalOpen,
+    closeNotificationModal,
+    modalInfos,
   } = useUserPanel(users)
 
   return (
@@ -49,8 +56,21 @@ export default function UsersPanel({ users } : InferGetServerSidePropsType<typeo
           <MyTable
             tableHead={tableHead}
             data={filteredTableData ?? tableData ?? []}
+            renderActions={tableActions}
           />
         </Grid>
+
+        <ConfirmModal
+          action={deleteUserRequest}
+          confirmModalState={confirmModalState}
+          handleCloseConfirmModal={handleCloseConfirmModal}
+        />
+
+        <NotificationModal
+          isModalOpen={isModalOpen}
+          modalInfos={modalInfos}
+          closeNotificationModal={closeNotificationModal}
+        />
       </Container>
     </>
   )

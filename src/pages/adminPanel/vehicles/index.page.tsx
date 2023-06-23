@@ -28,6 +28,8 @@ export default function VehiclesPanel({ vehicles } : InferGetServerSidePropsType
     confirmModalState,
     handleCloseConfirmModal,
     deleteVehicleRequest,
+    setVehicleId,
+    vehicleId,
     filteredTableData,
     searchInputValue,
     handleSearch,
@@ -73,6 +75,8 @@ export default function VehiclesPanel({ vehicles } : InferGetServerSidePropsType
           <MyTable
             tableHead={tableHead}
             data={filteredTableData ?? tableData ?? []}
+            setRowId={setVehicleId}
+            rowId={vehicleId}
             renderActions={tableActions}
           />
         </Grid>
