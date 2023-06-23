@@ -1,7 +1,7 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
 import { Container, Grid, Typography } from "@mui/material";
-import { HeaderMenu, MyTable } from "@/components";
+import { HeaderMenu, MyTable, SearchInput } from "@/components";
 
 import { getDriverById } from "@/services/requests/driver.request";
 import { IDriver } from "@/dataTypes/driver.dto";
@@ -15,6 +15,10 @@ export default function DriverDisplacement({ driver, displacements } : InferGetS
     menuLinks,
     tableHead,
     tableData,
+    filteredTableData,
+    searchInputValue,
+    handleSearch,
+    clearSearchInput,
   } = useDeslocamentoPage(driver, displacements)
 
   return (
@@ -37,9 +41,17 @@ export default function DriverDisplacement({ driver, displacements } : InferGetS
 
         {/* content */}
         <Grid container marginTop={4} paddingX={4}>
+          <Grid item xs={12}>
+            <SearchInput
+              clearSearchInput={clearSearchInput}
+              handleSearch={handleSearch}
+              searchInputValue={searchInputValue}
+            />
+          </Grid>
+
           <MyTable
             tableHead={tableHead}
-            data={tableData ?? []}
+            data={filteredTableData ?? tableData ?? []}
           />
         </Grid>
       </Container>
