@@ -1,7 +1,7 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
 import { Container, Grid, Typography } from "@mui/material";
-import { HeaderMenu, MyTable, SearchInput } from "@/components";
+import { ConfirmModal, HeaderMenu, MyTable, NotificationModal, SearchInput } from "@/components";
 
 import { useDriverPanel } from "./driversPanel.controller";
 import { IDriver } from "@/dataTypes/driver.dto";
@@ -12,10 +12,19 @@ export default function DriversPanel({ drivers } : InferGetServerSidePropsType<t
   const {
     tableHead,
     tableData,
+    tableActions,
+    driverId,
+    setDriverId,
     filteredTableData,
     searchInputValue,
     handleSearch,
     clearSearchInput,
+    confirmModalState,
+    handleCloseConfirmModal,
+    deleteDriverRequest,
+    isModalOpen,
+    closeNotificationModal,
+    modalInfos,
   } = useDriverPanel(drivers)
 
   return (
@@ -49,8 +58,23 @@ export default function DriversPanel({ drivers } : InferGetServerSidePropsType<t
           <MyTable
             tableHead={tableHead}
             data={filteredTableData ?? tableData ?? []}
+            setRowId={setDriverId}
+            rowId={driverId}
+            renderActions={tableActions}
           />
         </Grid>
+
+        <ConfirmModal
+          action={deleteDriverRequest}
+          confirmModalState={confirmModalState}
+          handleCloseConfirmModal={handleCloseConfirmModal}
+        />
+
+        <NotificationModal
+          isModalOpen={isModalOpen}
+          modalInfos={modalInfos}
+          closeNotificationModal={closeNotificationModal}
+        />
       </Container>
     </>
   )

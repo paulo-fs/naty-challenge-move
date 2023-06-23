@@ -1,13 +1,34 @@
+import { useConfirmModal } from "@/components/ConfirmModal/ConfirmModal.controller";
+import { useNotificationModal } from "@/components/NotificationModal/NotificationModal.controller";
 import { IDriver } from "@/dataTypes/driver.dto";
+import { deleteDriver } from "@/services/requests/driver.request";
 import React from "react";
 
 export function useDriverPanel(drivers: IDriver[] | null) {
   const [searchInputValue, setSearchInputValue] = React.useState("");
+  const [driverId, setDriverId] = React.useState("");
+
+  const { confirmModalState, handleCloseConfirmModal, setConfirmModal } =
+    useConfirmModal();
+  const {
+    isModalOpen,
+    closeNotificationModal,
+    defineNotificationModalInfos,
+    modalInfos,
+  } = useNotificationModal();
+
   const tableHead = [
     { label: "id" },
     { label: "Nome" },
     { label: "Habilitação" },
     { label: "Categoria" },
+  ];
+
+  const tableActions = [
+    {
+      label: "Excluir",
+      action: openConfirmModal,
+    },
   ];
 
   const tableData = drivers?.map((item) => {
@@ -45,12 +66,44 @@ export function useDriverPanel(drivers: IDriver[] | null) {
     setSearchInputValue(event.target.value);
   }
 
+  function openConfirmModal() {
+    setConfirmModal("Atenção!", "Deseja excluir este Cliente?");
+  }
+
+  async function deleteDriverRequest() {
+    try {
+      await deleteDriver({ id: driverId });
+      handleCloseConfirmModal();
+      defineNotificationModalInfos({
+        title: "Sucesso!",
+        message: `Motorista excluído com sucesso.`,
+        redirect: `/adminpanel/drivers`,
+      });
+    } catch (err: any) {
+      handleCloseConfirmModal();
+      defineNotificationModalInfos({
+        title: "Ops!",
+        message: `Talvez este motorista já tenha sido excluído, recarregue a página.`,
+        redirect: `/adminpanel/drivers`,
+      });
+    }
+  }
+
   return {
     tableHead,
     tableData,
+    tableActions,
+    driverId,
+    setDriverId,
     filteredTableData,
     searchInputValue,
     handleSearch,
     clearSearchInput,
+    confirmModalState,
+    handleCloseConfirmModal,
+    deleteDriverRequest,
+    isModalOpen,
+    closeNotificationModal,
+    modalInfos,
   };
 }
