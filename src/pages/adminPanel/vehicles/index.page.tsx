@@ -28,6 +28,10 @@ export default function VehiclesPanel({ vehicles } : InferGetServerSidePropsType
     confirmModalState,
     handleCloseConfirmModal,
     deleteVehicleRequest,
+    filteredTableData,
+    searchInputValue,
+    handleSearch,
+    clearSearchInput,
   } = useVeiclePanel(vehicles)
 
   return (
@@ -51,11 +55,14 @@ export default function VehiclesPanel({ vehicles } : InferGetServerSidePropsType
         {/* content */}
         <Grid container marginTop={4} paddingX={4}>
         <Grid item xs={8}>
-            <TextField fullWidth placeholder="Busque por..." size="small" />
+            <TextField fullWidth placeholder="Busque por..." size="small"
+              value={searchInputValue}
+              onChange={handleSearch}
+            />
           </Grid>
 
           <Grid item xs={2} paddingX={2} marginBottom={4}>
-              <Button variant="outlined" fullWidth>
+              <Button variant="outlined" fullWidth onClick={clearSearchInput}>
                 Limpar busca
               </Button>
           </Grid>
@@ -70,7 +77,7 @@ export default function VehiclesPanel({ vehicles } : InferGetServerSidePropsType
 
           <MyTable
             tableHead={tableHead}
-            data={tableData ?? []}
+            data={filteredTableData ?? tableData ?? []}
             renderActions={tableActions}
           />
         </Grid>
@@ -80,6 +87,7 @@ export default function VehiclesPanel({ vehicles } : InferGetServerSidePropsType
           handleModal={handleOpenCloseFormModal}
           handleSubmit={handleSubmit}
           submitFunc={submitForm}
+          isSubmitting={isSubmitting}
         >
           <VehicleForm
             control={control}
@@ -109,7 +117,7 @@ export const getServerSideProps: GetServerSideProps<{
 }> = async ({ req, res }) => {
   res.setHeader(
     "Cache-Control",
-    "public, s-maxage=10, stale-while-revalidate=49"
+    "public, s-maxage=10, stale-while-revalidate=30"
   );
 
   try {

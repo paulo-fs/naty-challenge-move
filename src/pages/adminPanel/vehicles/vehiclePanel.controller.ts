@@ -11,12 +11,11 @@ import { useNotificationModal } from "@/components/NotificationModal/Notificatio
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useRouter } from "next/router";
 import { useConfirmModal } from "@/components/ConfirmModal/ConfirmModal.controller";
 
 export function useVeiclePanel(vehicles: IVehicle[] | null) {
-  const router = useRouter();
   const [vehicleId, setVehicleId] = React.useState("");
+  const [searchInputValue, setSearchInputValue] = React.useState("");
 
   const { isFormModalOpen, handleOpenCloseFormModal } = useFormModal();
   const { confirmModalState, handleCloseConfirmModal, setConfirmModal } =
@@ -72,6 +71,31 @@ export function useVeiclePanel(vehicles: IVehicle[] | null) {
       kmAtual: item.kmAtual,
     };
   });
+
+  function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
+    setSearchInputValue(event.target.value);
+  }
+
+  const filteredTableData = search();
+
+  function search() {
+    if (!searchInputValue) return;
+    const result = tableData?.filter((item) => {
+      return (
+        item.placa.toLowerCase().includes(searchInputValue.toLowerCase()) ||
+        item.marcaModelo
+          .toLowerCase()
+          .includes(searchInputValue.toLowerCase()) ||
+        item.anoFabricacao === Number(searchInputValue) ||
+        item.kmAtual === Number(searchInputValue)
+      );
+    });
+    return result;
+  }
+
+  function clearSearchInput() {
+    setSearchInputValue("");
+  }
 
   function setFormValues(data: IVehicle | null) {
     if (!data) return;
@@ -153,5 +177,9 @@ export function useVeiclePanel(vehicles: IVehicle[] | null) {
     confirmModalState,
     handleCloseConfirmModal,
     deleteVehicleRequest,
+    filteredTableData,
+    searchInputValue,
+    handleSearch,
+    clearSearchInput,
   };
 }
