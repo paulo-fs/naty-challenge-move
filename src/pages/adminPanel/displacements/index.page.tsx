@@ -1,7 +1,7 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
 import { Container, Grid, Typography } from "@mui/material";
-import { HeaderMenu, MyTable } from "@/components";
+import { HeaderMenu, MyTable, SearchInput } from "@/components";
 
 import { useDisplacementPanel } from "./displacementsPanel.controller";
 import { getAllDisplacements } from "@/services/requests/displacement.request";
@@ -12,6 +12,10 @@ export default function DisplacementsPanel({ displacements } : InferGetServerSid
   const {
     tableHead,
     tableData,
+    filteredTableData,
+    searchInputValue,
+    handleSearch,
+    clearSearchInput,
   } = useDisplacementPanel(displacements)
 
   return (
@@ -34,9 +38,18 @@ export default function DisplacementsPanel({ displacements } : InferGetServerSid
 
         {/* content */}
         <Grid container marginTop={4} paddingX={4}>
+          <Grid item xs={12}>
+            <SearchInput
+              clearSearchInput={clearSearchInput}
+              handleSearch={handleSearch}
+              searchInputValue={searchInputValue}
+            />
+          </Grid>
+
+
           <MyTable
             tableHead={tableHead}
-            data={tableData ?? []}
+            data={filteredTableData ?? tableData ?? []}
           />
         </Grid>
       </Container>
