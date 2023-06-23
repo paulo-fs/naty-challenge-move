@@ -1,7 +1,7 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
-import { Button, Container, Grid, TextField, Typography } from "@mui/material";
-import { HeaderMenu, MyTable } from "@/components";
+import { Container, Grid, Typography } from "@mui/material";
+import { HeaderMenu, MyTable, SearchInput } from "@/components";
 
 import { useDriverPanel } from "./driversPanel.controller";
 import { IDriver } from "@/dataTypes/driver.dto";
@@ -12,6 +12,10 @@ export default function DriversPanel({ drivers } : InferGetServerSidePropsType<t
   const {
     tableHead,
     tableData,
+    filteredTableData,
+    searchInputValue,
+    handleSearch,
+    clearSearchInput,
   } = useDriverPanel(drivers)
 
   return (
@@ -34,19 +38,17 @@ export default function DriversPanel({ drivers } : InferGetServerSidePropsType<t
 
         {/* content */}
         <Grid container marginTop={4} paddingX={4}>
-          <Grid item xs={9}>
-            <TextField fullWidth placeholder="Busque por..." size="small" />
-          </Grid>
-
-          <Grid item xs={3} paddingLeft={4} marginBottom={4}>
-              <Button variant="outlined" fullWidth>
-                Limpar busca
-              </Button>
+        <Grid item xs={12}>
+            <SearchInput
+              clearSearchInput={clearSearchInput}
+              handleSearch={handleSearch}
+              searchInputValue={searchInputValue}
+            />
           </Grid>
 
           <MyTable
             tableHead={tableHead}
-            data={tableData ?? []}
+            data={filteredTableData ?? tableData ?? []}
           />
         </Grid>
       </Container>
