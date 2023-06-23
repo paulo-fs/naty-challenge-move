@@ -86,8 +86,8 @@ export function useVeiclePanel(vehicles: IVehicle[] | null) {
         item.marcaModelo
           .toLowerCase()
           .includes(searchInputValue.toLowerCase()) ||
-        item.anoFabricacao === Number(searchInputValue) ||
-        item.kmAtual === Number(searchInputValue)
+        String(item.anoFabricacao).includes(searchInputValue) ||
+        String(item.kmAtual).includes(searchInputValue)
       );
     });
     return result;
