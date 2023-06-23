@@ -1,8 +1,21 @@
+import { useConfirmModal } from "@/components/ConfirmModal/ConfirmModal.controller";
+import { useNotificationModal } from "@/components/NotificationModal/NotificationModal.controller";
 import { IUser } from "@/dataTypes/passanger.dto";
+import { deleteUser } from "@/services/requests/user.request";
 import React from "react";
 
 export function useUserPanel(users: IUser[] | null) {
   const [searchInputValue, setSearchInputValue] = React.useState("");
+  const [userId, setUserId] = React.useState("");
+
+  const { confirmModalState, handleCloseConfirmModal, setConfirmModal } =
+    useConfirmModal();
+  const {
+    isModalOpen,
+    closeNotificationModal,
+    defineNotificationModalInfos,
+    modalInfos,
+  } = useNotificationModal();
 
   const tableHead = [
     { label: "id" },
@@ -13,12 +26,12 @@ export function useUserPanel(users: IUser[] | null) {
     { label: "UF" },
   ];
 
-  // const tableActions = [
-  //   {
-  //     label: "Excluir",
-  //     action: openConfirmModal,
-  //   },
-  // ];
+  const tableActions = [
+    {
+      label: "Excluir",
+      action: openConfirmModal,
+    },
+  ];
 
   const tableData = users?.map((item) => {
     return {
@@ -59,12 +72,44 @@ export function useUserPanel(users: IUser[] | null) {
     setSearchInputValue(event.target.value);
   }
 
+  function openConfirmModal() {
+    setConfirmModal("Atenção!", "Deseja excluir este Cliente?");
+  }
+
+  async function deleteUserRequest() {
+    try {
+      await deleteUser({ id: userId });
+      handleCloseConfirmModal();
+      defineNotificationModalInfos({
+        title: "Sucesso!",
+        message: `Veículo excluído com sucesso.`,
+        redirect: `/adminpanel/users`,
+      });
+    } catch (err: any) {
+      handleCloseConfirmModal();
+      defineNotificationModalInfos({
+        title: "Ops!",
+        message: `Talvez este veículo já tenha sido excluído, recarregue a página.`,
+        redirect: `/adminpanel/users`,
+      });
+    }
+  }
+
   return {
     tableHead,
     tableData,
+    tableActions,
+    userId,
+    setUserId,
     filteredTableData,
     searchInputValue,
     handleSearch,
     clearSearchInput,
+    confirmModalState,
+    handleCloseConfirmModal,
+    deleteUserRequest,
+    isModalOpen,
+    closeNotificationModal,
+    modalInfos,
   };
 }

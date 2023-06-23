@@ -13,6 +13,8 @@ export default function UsersPanel({ users } : InferGetServerSidePropsType<typeo
     tableHead,
     tableData,
     tableActions,
+    userId,
+    setUserId,
     filteredTableData,
     searchInputValue,
     handleSearch,
@@ -56,6 +58,8 @@ export default function UsersPanel({ users } : InferGetServerSidePropsType<typeo
           <MyTable
             tableHead={tableHead}
             data={filteredTableData ?? tableData ?? []}
+            setRowId={setUserId}
+            rowId={userId}
             renderActions={tableActions}
           />
         </Grid>
