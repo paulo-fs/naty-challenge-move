@@ -1,7 +1,7 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
 import { Button, Container, Grid, MenuItem, TextField, Typography } from "@mui/material";
-import { ConfirmModal, FormModal, HeaderMenu, MyTable, NotificationModal } from "@/components";
+import { ConfirmModal, FormModal, HeaderMenu, MyTable, NotificationModal, SearchInput } from "@/components";
 
 import { useVeiclePanel } from "./vehiclePanel.controller";
 import { getAllVehicles } from "@/services/requests/vehicle.request";
@@ -54,17 +54,12 @@ export default function VehiclesPanel({ vehicles } : InferGetServerSidePropsType
 
         {/* content */}
         <Grid container marginTop={4} paddingX={4}>
-        <Grid item xs={8}>
-            <TextField fullWidth placeholder="Busque por..." size="small"
-              value={searchInputValue}
-              onChange={handleSearch}
+          <Grid item xs={10}>
+            <SearchInput
+              clearSearchInput={clearSearchInput}
+              handleSearch={handleSearch}
+              searchInputValue={searchInputValue}
             />
-          </Grid>
-
-          <Grid item xs={2} paddingX={2} marginBottom={4}>
-              <Button variant="outlined" fullWidth onClick={clearSearchInput}>
-                Limpar busca
-              </Button>
           </Grid>
 
           <Grid item xs={2}>
