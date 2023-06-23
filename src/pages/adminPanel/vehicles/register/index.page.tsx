@@ -1,15 +1,22 @@
-import { Button, Container, Grid, TextField, Typography } from "@mui/material";
-import { HeaderMenu, MyTable } from "@/components";
+import { Button, Card, CardActions, CardContent, Container, FormControl, Grid, TextField, Typography } from "@mui/material";
+import { HeaderMenu, NotificationModal } from "@/components";
 
 import Link from "next/link";
 import { menuLinks } from "@/constants/adminPanelLinks";
+import { VehicleForm } from "./VehicleForm/VehicleForm";
+import { useRegister } from "./register.controller";
 
 export default function VehiclesPanel() {
-  // const {
-  //   menuLinks,
-  //   tableHead,
-  //   tableData,
-  // } = useVeiclePanel(vehicles)
+  const {
+    handleSubmit,
+    submitForm,
+    isSubmitting,
+    errors,
+    control,
+    isModalOpen,
+    closeNotificationModal,
+    modalInfos,
+  } = useRegister()
 
   return (
     <>
@@ -18,37 +25,46 @@ export default function VehiclesPanel() {
       />
       <Container maxWidth='xl'>
         {/* head description */}
-        <Grid container marginTop={14} >
-          <Grid item sm={6} padding={2}>
+        <Grid container marginTop={14} paddingX={4} maxWidth={500} width='100%' marginX='auto'>
+          <Grid item  padding={2}>
             <Typography component='h1' variant="h4" sx={{ textTransform: 'capitalize' }}>
-              Relatório de veículos
+              Registrar novo veículo
             </Typography>
             <Typography variant="body1">
-              Dados dos veículos da plataforma Move.
+              Cadastro dos veículos da plataforma Move.
             </Typography>
           </Grid>
         </Grid>
 
         {/* content */}
-        <Grid container marginTop={4} paddingX={4}>
-        <Grid item xs={8}>
-            <TextField fullWidth placeholder="Busque por..." size="small" />
-          </Grid>
-
-          <Grid item xs={2} paddingX={2} marginBottom={4} direction='row'>
-              <Button variant="outlined" fullWidth>
-                Limpar busca
-              </Button>
-          </Grid>
-
-          <Grid item xs={2}>
-            <Link href='/adminpanel/vehicles/register'>
-              <Button variant="contained" fullWidth>
-                Cadastrar veículo
-              </Button>
-            </Link>
-          </Grid>
+        <Grid container marginTop={4} paddingX={4} maxWidth={500} width='100%' marginX='auto'>
+          <FormControl component='form' onSubmit={handleSubmit(submitForm)}>
+            <Card variant="outlined" elevation={0} sx={{ width: '100%' }}>
+              <CardContent>
+                <Grid container>
+                  <VehicleForm
+                    control={control}
+                    errors={errors}
+                  />
+                </Grid>
+              </CardContent>
+              <CardActions sx={{
+                paddingX: 3, paddingBottom: 3, display: 'flex', flexDirection: 'column', gap: 2
+              }}>
+                <Button variant="contained" type="submit" fullWidth>Registrar</Button>
+                <Link href='/adminpanel/vehicles'>
+                  <Button variant="text" fullWidth>Cancelar</Button>
+                </Link>
+              </CardActions>
+            </Card>
+          </FormControl>
         </Grid>
+
+        <NotificationModal
+          closeNotificationModal={closeNotificationModal}
+          isModalOpen={isModalOpen}
+          modalInfos={modalInfos}
+        />
       </Container>
     </>
   )
