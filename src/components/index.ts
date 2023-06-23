@@ -5,3 +5,4 @@ export * from "./MySnackBar/MySnackBar";
 export * from "./MyTable/MyTable";
 export * from "./FormModal/FormModal";
 export * from "./ConfirmModal/ConfirmModal";
+export * from "./SearchInput/SearchInput";
