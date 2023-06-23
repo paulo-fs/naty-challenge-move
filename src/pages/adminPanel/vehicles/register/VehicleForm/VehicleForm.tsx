@@ -23,8 +23,8 @@ export function VehicleForm(props: DriverFormProps) {
                 label='Marca/Modelo'
                 error={!!errors.marcaModelo?.message}
                 helperText={errors.marcaModelo?.message}
-                disabled={isDisabled || keepDisabled}
-                variant={(isDisabled || keepDisabled) ? 'standard' : undefined}
+                disabled={isDisabled}
+                variant={(isDisabled) ? 'standard' : undefined}
               />
             </>
           )}
@@ -41,8 +41,8 @@ export function VehicleForm(props: DriverFormProps) {
                   label='Ano de Fabricação'
                   error={!!errors.anoFabricacao?.message}
                   helperText={errors.anoFabricacao?.message}
-                  disabled={isDisabled || keepDisabled}
-                  variant={(isDisabled || keepDisabled) ? 'standard' : undefined}
+                  disabled={isDisabled}
+                  variant={(isDisabled) ? 'standard' : undefined}
                 />
               </>
             )}
@@ -58,8 +58,8 @@ export function VehicleForm(props: DriverFormProps) {
                   label='Placa'
                   error={!!errors.placa?.message}
                   helperText={errors.placa?.message}
-                  disabled={isDisabled}
-                  variant={isDisabled ? 'standard' : undefined}
+                  disabled={isDisabled || keepDisabled}
+                  variant={(isDisabled || keepDisabled) ? 'standard' : undefined}
                 />
               </>
             )}
