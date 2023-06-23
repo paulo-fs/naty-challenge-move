@@ -1,16 +1,12 @@
-import { useRadioGroupClientDriver } from "@/components/RadioGroupClientDriver/RadioGroupClientDriver.controller";
-import { createDriver } from "@/services/requests/driver.request";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { createUser } from "@/services/requests/user.request";
 import { useNotificationModal } from "@/components/NotificationModal/NotificationModal.controller";
 import { useVehicleForm } from "./VehicleForm/VehicleForm.controller";
 import { createVehicle } from "@/services/requests/vehicle.request";
 
 export function useRegister() {
-  const { defaultVehicleFormSchema, vehicleFormSchema } = useVehicleForm();
-
+  const { vehicleFormSchema } = useVehicleForm();
   const {
     isModalOpen,
     closeNotificationModal,
@@ -24,7 +20,6 @@ export function useRegister() {
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
-    reset,
   } = useForm<VehicleRegisterFormData>({
     resolver: zodResolver(vehicleFormSchema),
   });
