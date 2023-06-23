@@ -1,30 +1,6 @@
-import { IMenuLink } from "@/components/HeaderMenu/HeaderMenu.props";
 import { IDisplacement } from "@/dataTypes/displacement.dto";
 
 export function useDisplacementPanel(displacements: IDisplacement[] | null) {
-  const menuLinks: IMenuLink[] = [
-    {
-      title: "Painel",
-      url: "adminpanel",
-    },
-    {
-      title: "Clientes",
-      url: "adminpanel/users",
-    },
-    {
-      title: "Motoristas",
-      url: "adminpanel/drivers",
-    },
-    {
-      title: "Deslocamentos",
-      url: "adminpanel/displacements",
-    },
-    {
-      title: "Veículos",
-      url: "adminpanel/vehicles",
-    },
-  ];
-
   const tableHead = [
     { label: "id" },
     { label: "Km Total" },
@@ -49,7 +25,6 @@ export function useDisplacementPanel(displacements: IDisplacement[] | null) {
   });
 
   return {
-    menuLinks,
     tableHead,
     tableData,
   };

@@ -1,30 +1,6 @@
-import { IMenuLink } from "@/components/HeaderMenu/HeaderMenu.props";
 import { IUser } from "@/dataTypes/passanger.dto";
 
 export function useUserPanel(users: IUser[] | null) {
-  const menuLinks: IMenuLink[] = [
-    {
-      title: "Painel",
-      url: "adminpanel",
-    },
-    {
-      title: "Clientes",
-      url: "adminpanel/users",
-    },
-    {
-      title: "Motoristas",
-      url: "adminpanel/drivers",
-    },
-    {
-      title: "Deslocamentos",
-      url: "adminpanel/displacements",
-    },
-    {
-      title: "Veículos",
-      url: "adminpanel/vehicles",
-    },
-  ];
-
   const tableHead = [
     { label: "id" },
     { label: "Nome" },
@@ -46,7 +22,6 @@ export function useUserPanel(users: IUser[] | null) {
   });
 
   return {
-    menuLinks,
     tableHead,
     tableData,
   };

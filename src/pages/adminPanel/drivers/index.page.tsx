@@ -1,15 +1,15 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
-import { Container, Grid, Typography } from "@mui/material";
+import { Button, Container, Grid, TextField, Typography } from "@mui/material";
 import { HeaderMenu, MyTable } from "@/components";
 
 import { useDriverPanel } from "./driversPanel.controller";
 import { IDriver } from "@/dataTypes/driver.dto";
 import { getAllDrivers } from "@/services/requests/driver.request";
+import { menuLinks } from "@/constants/adminPanelLinks";
 
 export default function DriversPanel({ drivers } : InferGetServerSidePropsType<typeof getServerSideProps>) {
   const {
-    menuLinks,
     tableHead,
     tableData,
   } = useDriverPanel(drivers)
@@ -34,6 +34,16 @@ export default function DriversPanel({ drivers } : InferGetServerSidePropsType<t
 
         {/* content */}
         <Grid container marginTop={4} paddingX={4}>
+          <Grid item xs={9}>
+            <TextField fullWidth placeholder="Busque por..." size="small" />
+          </Grid>
+
+          <Grid item xs={3} paddingLeft={4} marginBottom={4}>
+              <Button variant="outlined" fullWidth>
+                Limpar busca
+              </Button>
+          </Grid>
+
           <MyTable
             tableHead={tableHead}
             data={tableData ?? []}

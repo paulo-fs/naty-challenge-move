@@ -6,10 +6,10 @@ import { HeaderMenu, MyTable } from "@/components";
 import { getAllUsers } from "@/services/requests/user.request";
 import { IUser } from "@/dataTypes/passanger.dto";
 import { useUserPanel } from "./userPanel.controller";
+import { menuLinks } from "@/constants/adminPanelLinks";
 
 export default function UsersPanel({ users } : InferGetServerSidePropsType<typeof getServerSideProps>) {
   const {
-    menuLinks,
     tableHead,
     tableData,
   } = useUserPanel(users)

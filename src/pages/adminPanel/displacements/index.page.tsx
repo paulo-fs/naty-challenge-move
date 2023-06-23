@@ -6,10 +6,10 @@ import { HeaderMenu, MyTable } from "@/components";
 import { useDisplacementPanel } from "./displacementsPanel.controller";
 import { getAllDisplacements } from "@/services/requests/displacement.request";
 import { IDisplacement } from "@/dataTypes/displacement.dto";
+import { menuLinks } from "@/constants/adminPanelLinks";
 
 export default function DisplacementsPanel({ displacements } : InferGetServerSidePropsType<typeof getServerSideProps>) {
   const {
-    menuLinks,
     tableHead,
     tableData,
   } = useDisplacementPanel(displacements)

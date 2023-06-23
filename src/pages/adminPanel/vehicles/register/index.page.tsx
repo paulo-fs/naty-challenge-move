@@ -1,21 +1,15 @@
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-
 import { Button, Container, Grid, TextField, Typography } from "@mui/material";
 import { HeaderMenu, MyTable } from "@/components";
 
-import { IDriver } from "@/dataTypes/driver.dto";
-import { getAllDrivers } from "@/services/requests/driver.request";
-import { useVeiclePanel } from "./vehiclePanel.controller";
-import { getAllVehicles } from "@/services/requests/vehicle.request";
-import { IVehicle } from "@/dataTypes/vehicle.dto";
 import Link from "next/link";
 import { menuLinks } from "@/constants/adminPanelLinks";
 
-export default function VehiclesPanel({ vehicles } : InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const {
-    tableHead,
-    tableData,
-  } = useVeiclePanel(vehicles)
+export default function VehiclesPanel() {
+  // const {
+  //   menuLinks,
+  //   tableHead,
+  //   tableData,
+  // } = useVeiclePanel(vehicles)
 
   return (
     <>
@@ -54,37 +48,8 @@ export default function VehiclesPanel({ vehicles } : InferGetServerSidePropsType
               </Button>
             </Link>
           </Grid>
-
-          <MyTable
-            tableHead={tableHead}
-            data={tableData ?? []}
-          />
         </Grid>
       </Container>
     </>
   )
 }
-
-export const getServerSideProps: GetServerSideProps<{
-  vehicles: IVehicle[] | null
-}> = async ({ req, res }) => {
-  res.setHeader(
-    "Cache-Control",
-    "public, s-maxage=10, stale-while-revalidate=49"
-  );
-
-  try {
-    const { vehicles } = await getAllVehicles()
-    return {
-      props: {
-        vehicles
-      },
-    }
-  } catch (err: any) {
-    return {
-      props: {
-        vehicles: null
-      },
-    }
-  };
-};
