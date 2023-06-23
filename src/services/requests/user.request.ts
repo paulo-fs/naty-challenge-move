@@ -1,4 +1,4 @@
-import { IUser, IUserCreate } from "@/dataTypes/passanger.dto";
+import { IUser, IUserCreate, IUserDelete } from "@/dataTypes/passanger.dto";
 import { axiosApi } from "@/lib/axios";
 
 export async function getAllUsers(): Promise<{ users: IUser[] }> {
@@ -25,4 +25,12 @@ export async function createUser(
   return {
     newUserId: data,
   };
+}
+
+export async function deleteUser(data: IUserDelete): Promise<void> {
+  await axiosApi({
+    method: "DELETE",
+    url: `/Cliente/${data.id}`,
+    data: data,
+  });
 }
