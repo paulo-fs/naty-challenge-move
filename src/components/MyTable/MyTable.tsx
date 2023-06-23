@@ -53,6 +53,20 @@ export function MyTable(props: MyTableProps) {
     setPage(0);
   };
 
+  if (data.length === 0) {
+    return(
+      <Paper variant='outlined' elevation={0} sx={{
+        width: '100%',
+        overflow: 'hidden',
+        padding: 8
+      }}>
+        <Typography variant='h6' textAlign='center'>
+          Não existem resultados para serem exibidos.
+        </Typography>
+      </Paper>
+    )
+  }
+
   return (
     <Paper variant='outlined' elevation={0} sx={{
       width: '100%',
