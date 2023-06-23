@@ -1,6 +1,6 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
-import { Card, CardContent, Container, Divider, Grid, Typography } from "@mui/material";
+import { Container, Grid, Typography } from "@mui/material";
 import { ConfirmModal, HeaderMenu, MyTable, NotificationModal, SearchInput } from "@/components";
 
 import { getAllUsers } from "@/services/requests/user.request";
