@@ -1,4 +1,5 @@
 import { IDisplacement } from "@/dataTypes/displacement.dto";
+import dayjs from "dayjs";
 import React from "react";
 
 export function useDisplacementPanel(displacements: IDisplacement[] | null) {
@@ -6,6 +7,7 @@ export function useDisplacementPanel(displacements: IDisplacement[] | null) {
 
   const tableHead = [
     { label: "id" },
+    { label: "Data" },
     { label: "Km Total" },
     { label: "Km Inicial" },
     { label: "Km Final" },
@@ -16,11 +18,14 @@ export function useDisplacementPanel(displacements: IDisplacement[] | null) {
 
   const tableData = displacements?.map((item) => {
     const total = item.kmFinal - item.kmInicial;
+    const totalPositive = total < 0 ? total * -1 : total;
+    const kmResult = totalPositive === 0 ? "Alguns metros" : totalPositive;
     return {
       id: item.id,
-      kmTotal: total < 0 ? total * -1 : total,
-      kmInicial: item.kmInicial,
-      kmFinal: item.kmFinal,
+      inicioDeslocamento: dayjs(item.inicioDeslocamento).format("DD/MM/YYYY"),
+      kmTotal: kmResult,
+      kmInicial: item.kmInicial ?? 0,
+      kmFinal: item.kmFinal ?? 0,
       idCliente: item.idCliente,
       idCondutor: item.idCondutor,
       idVeiculo: item.idVeiculo,
