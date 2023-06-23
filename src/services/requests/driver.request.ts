@@ -23,6 +23,13 @@ export async function getDriversInputList(): Promise<{
   };
 }
 
+export async function getAllDrivers(): Promise<{ drivers: IDriver[] }> {
+  const { data } = await axiosApi.get("/Condutor");
+  return {
+    drivers: data,
+  };
+}
+
 export async function getDriverById(id: string): Promise<{ driver: IDriver }> {
   const { data } = await axiosApi.get(`/Condutor/${id}`);
   return {

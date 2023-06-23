@@ -16,3 +16,10 @@ export async function getVehicleInputData(): Promise<{
     vehicles,
   };
 }
+
+export async function getAllVehicles(): Promise<{ vehicles: IVehicle[] }> {
+  const { data } = await axiosApi.get("/Veiculo");
+  return {
+    vehicles: data,
+  };
+}

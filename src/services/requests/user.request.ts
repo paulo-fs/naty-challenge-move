@@ -1,9 +1,11 @@
 import { IUser, IUserCreate } from "@/dataTypes/passanger.dto";
 import { axiosApi } from "@/lib/axios";
 
-export async function getUsers(): Promise<IUser[]> {
+export async function getAllUsers(): Promise<{ users: IUser[] }> {
   const { data } = await axiosApi.get("/Cliente");
-  return data;
+  return {
+    users: data,
+  };
 }
 
 export async function getUserById(id: string): Promise<{ user: IUser }> {
