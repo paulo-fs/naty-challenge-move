@@ -19,6 +19,8 @@ interface MyTableProps {
   tableHead: Column[]
   data: any[]
   renderActions?: IRenderAction[]
+  setRowId?: React.Dispatch<React.SetStateAction<string>>
+  rowId?: string
 }
 
 interface IRenderAction {
@@ -27,11 +29,10 @@ interface IRenderAction {
 }
 
 export function MyTable(props: MyTableProps) {
-  const { tableHead, data, renderActions} = props
+  const { tableHead, data, renderActions, setRowId, rowId} = props
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [rowId, setRowId] = React.useState('')
   const isMenuOpen = Boolean(anchorEl);
   const hasActions = Boolean(renderActions)
 
@@ -102,7 +103,7 @@ export function MyTable(props: MyTableProps) {
                       aria-expanded={isMenuOpen ? 'true' : undefined}
                       onClick={(event) => {
                         handleOpenMenu(event)
-                        setRowId(row.id)
+                        setRowId && setRowId(row.id)
                       }}
                     >
                       <MoreVert />
@@ -145,7 +146,7 @@ export function MyTable(props: MyTableProps) {
           return (
             <MenuItem key={i} onClick={() => {
               handleCloseMenu()
-              action.action(rowId)
+              action.action(rowId!)
             }}>
               {action.label}
             </MenuItem>
