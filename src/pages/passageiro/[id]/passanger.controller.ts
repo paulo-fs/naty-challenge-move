@@ -1,4 +1,3 @@
-import { IMenuLink } from "@/components/HeaderMenu/HeaderMenu.props";
 import { useMySnackBar } from "@/components/MySnackBar/MySnackBar.controller";
 import { useNotificationModal } from "@/components/NotificationModal/NotificationModal.controller";
 import { IDisplacementOnStore } from "@/dataTypes/displacement.dto";
@@ -12,16 +11,27 @@ import {
   getDisplacementById,
   startDisplacement,
 } from "@/services/requests/displacement.request";
+import { getAllDrivers } from "@/services/requests/driver.request";
+import { getAllVehicles } from "@/services/requests/vehicle.request";
 import { useRouter } from "next/router";
 import React from "react";
+import { useStartDisplacementModal } from "./StartDisplacementModal/controller";
 
 export function usePassanger(userId: string | undefined) {
-  const [driverName, setDriverName] = React.useState("");
-  const [driverId, setDriverId] = React.useState("");
-  const [carModel, setCarModel] = React.useState("");
-  const [carId, setCarId] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [driverAndVehicleId, setCarAndVehicleId] = React.useState({
+    driverId: "",
+    vehicleId: "",
+  });
   const [activeDisplacement, setActiveDisplacement] =
     React.useState<IDisplacementOnStore | null>(null);
+
+  const {
+    isStartModalOpen,
+    handleStartModal,
+    isSuccessStart,
+    handleSuccessStart,
+  } = useStartDisplacementModal();
 
   const {
     closeNotificationModal,
@@ -37,7 +47,49 @@ export function usePassanger(userId: string | undefined) {
   } = useMySnackBar();
 
   const router = useRouter();
-  const isDisabled = driverName.length === 0 || carModel.length === 0;
+
+  async function askACar() {
+    setIsLoading(true);
+    const vehicle = await getACar();
+    const driver = await getADriver();
+
+    const hasAProblema = !vehicle || !driver;
+    if (hasAProblema) {
+      handleStartModal();
+      setIsLoading(false);
+      return false;
+    }
+
+    setCarAndVehicleId({
+      driverId: driver.id,
+      vehicleId: vehicle.id,
+    });
+    setIsLoading(false);
+    handleSuccessStart(true);
+    handleStartModal();
+  }
+
+  async function getACar() {
+    try {
+      const { vehicles } = await getAllVehicles();
+      const hasVehicle = vehicles.length > 0;
+      return hasVehicle ? vehicles[0] : null;
+    } catch (err: any) {
+      console.log("car error >>>", err.message.data);
+      return null;
+    }
+  }
+
+  async function getADriver() {
+    try {
+      const { drivers } = await getAllDrivers();
+      const hasDriver = drivers.length > 0;
+      return hasDriver ? drivers[0] : null;
+    } catch (err: any) {
+      console.log("driver error >>>", err.messsage.data);
+      return null;
+    }
+  }
 
   async function getActiveDisplacement(id: string) {
     try {
@@ -61,14 +113,14 @@ export function usePassanger(userId: string | undefined) {
   }
 
   async function handleStartDisplacement() {
-    if (userId === undefined || driverId.length === 0 || carId.length === 0)
-      return;
+    handleStartModal();
+    setIsLoading(true);
 
     try {
       const { displacementId } = await startDisplacement({
         idCliente: Number(userId),
-        idCondutor: Number(driverId),
-        idVeiculo: Number(carId),
+        idCondutor: Number(driverAndVehicleId.driverId),
+        idVeiculo: Number(driverAndVehicleId.vehicleId),
       });
       getActiveDisplacement(displacementId);
     } catch (err: any) {
@@ -82,11 +134,14 @@ export function usePassanger(userId: string | undefined) {
       });
       removeDisplacementOnStore(userId!);
       setActiveDisplacement(null);
+    } finally {
+      setIsLoading(false);
     }
   }
 
   async function handleFinishDisplacement() {
     if (!activeDisplacement) return;
+    setIsLoading(true);
 
     try {
       await finishDisplacement({
@@ -109,6 +164,8 @@ export function usePassanger(userId: string | undefined) {
         title: "Ops, algo deu errado",
         error: true,
       });
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -126,13 +183,11 @@ export function usePassanger(userId: string | undefined) {
   }, [userId]);
 
   return {
-    driverName,
-    setDriverName,
-    setDriverId,
-    carModel,
-    setCarModel,
-    setCarId,
-    isDisabled,
+    askACar,
+    isStartModalOpen,
+    handleStartModal,
+    isSuccessStart,
+    isLoading,
     handleStartDisplacement,
     activeDisplacement,
     handleFinishDisplacement,
