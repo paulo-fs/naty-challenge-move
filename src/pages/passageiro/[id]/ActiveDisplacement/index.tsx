@@ -12,7 +12,7 @@ export function ActiveDisplacement({
   handleFinishDisplacement, data
 }: ActiveDisplacementProps) {
   return (
-    <Box marginTop={4}>
+    <Box marginTop={16}>
       <Typography paddingX={2} variant="h6" fontWeight='bold' sx={{
         animation: '2s infinite fade-in-out',
         '@keyframes fade-in-out': {
@@ -31,7 +31,7 @@ export function ActiveDisplacement({
       </Typography>
 
       <Grid container marginTop={1}>
-        <Grid item sm={6} paddingX={2}>
+        <Grid item sm={12} paddingX={2}>
           <Card variant="outlined">
             <CardContent sx={{ display: 'flex', justifyContent: 'space-around' }}>
               <Box>
@@ -53,11 +53,13 @@ export function ActiveDisplacement({
             </CardContent>
           </Card>
         </Grid>
-      <Grid item sm={6} paddingX={2}>
+      <Grid item sm={12} paddingX={2}>
         <Card elevation={0} sx={{ height: '100%' }}>
           <CardActions>
-            <Button variant="contained" onClick={handleFinishDisplacement}>
-              Finalizar
+            <Button variant="contained" onClick={handleFinishDisplacement}
+              sx={{ width: 300, height: 64, mx: 'auto' }}
+            >
+              Cheguei no meu destino
             </Button>
           </CardActions>
         </Card>
