@@ -1,6 +1,9 @@
+import React from "react";
 import { z } from "zod";
 
 export function useUserForm() {
+  const [isDisabled, setIsDisabled] = React.useState(true);
+
   const userFormSchema = z.object({
     nome: z
       .string()
@@ -52,8 +55,14 @@ export function useUserForm() {
     uf: "",
   };
 
+  function handleAbleDisableForm(state?: boolean) {
+    setIsDisabled(state ?? !isDisabled);
+  }
+
   return {
     userFormSchema,
     defaultUserValues,
+    isDisabled,
+    handleAbleDisableForm,
   };
 }

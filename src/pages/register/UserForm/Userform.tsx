@@ -1,8 +1,15 @@
 import { Grid, TextField } from "@mui/material";
 import { Controller } from "react-hook-form";
 
-export function UserForm(props: any) {
-  const { control, errors } = props
+interface UserFormProps {
+  control: any
+  errors: any
+  isDisabled?: boolean
+  keepDisabled?: boolean
+}
+
+export function UserForm(props: UserFormProps) {
+  const { control, errors, isDisabled, keepDisabled } = props
 
   return (
     <>
@@ -15,6 +22,8 @@ export function UserForm(props: any) {
                 label='Nome e sobrenome'
                 error={!!errors.nome?.message}
                 helperText={errors.nome?.message}
+                disabled={isDisabled}
+                variant={isDisabled ? 'standard' : undefined}
               />
             )}
           />
@@ -29,6 +38,8 @@ export function UserForm(props: any) {
               label='Número do documento'
               error={!!errors.numeroDocumento?.message}
               helperText={errors.numeroDocumento?.message}
+              disabled={isDisabled || keepDisabled}
+              variant={(isDisabled || keepDisabled) ? 'standard' : undefined}
             />
           )}
         />
@@ -42,6 +53,8 @@ export function UserForm(props: any) {
                 label='Tipo'
                 error={!!errors.tipoDocumento?.message}
                 helperText={errors.tipoDocumento?.message}
+                disabled={isDisabled || keepDisabled}
+                variant={(isDisabled || keepDisabled) ? 'standard' : undefined}
               />
             )}
           />
@@ -56,6 +69,8 @@ export function UserForm(props: any) {
                 label='Seu endereço'
                 error={!!errors.logradouro?.message}
                 helperText={errors.logradouro?.message}
+                disabled={isDisabled}
+                variant={isDisabled ? 'standard' : undefined}
               />
             )}
           />
@@ -70,6 +85,8 @@ export function UserForm(props: any) {
                 label='Bairro'
                 error={!!errors.bairro?.message}
                 helperText={errors.bairro?.message}
+                disabled={isDisabled}
+                variant={isDisabled ? 'standard' : undefined}
               />
             )}
           />
@@ -83,6 +100,8 @@ export function UserForm(props: any) {
                 label='Número'
                 error={!!errors.numero?.message}
                 helperText={errors.numero?.message}
+                disabled={isDisabled}
+                variant={isDisabled ? 'standard' : undefined}
               />
             )}
           />
@@ -97,6 +116,8 @@ export function UserForm(props: any) {
                 label='Cidade'
                 error={!!errors.cidade?.message}
                 helperText={errors.cidade?.message}
+                disabled={isDisabled}
+                variant={isDisabled ? 'standard' : undefined}
               />
             )}
           />
@@ -110,6 +131,8 @@ export function UserForm(props: any) {
                 label='UF'
                 error={!!errors.uf?.message}
                 helperText={errors.uf?.message}
+                disabled={isDisabled}
+                variant={isDisabled ? 'standard' : undefined}
               />
             )}
           />
