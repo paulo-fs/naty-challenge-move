@@ -5,7 +5,7 @@ import { Bolt } from '@mui/icons-material'
 import React from 'react'
 import { LoginForm } from './LoginForm'
 
-export function Login() {
+export default function Login() {
   return (
     <>
       <Head>

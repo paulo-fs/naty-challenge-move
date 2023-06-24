@@ -1,2 +1,1 @@
-import { Login } from './Login/LoginPage'
-export default Login
+export { default } from './Login/LoginPage'
