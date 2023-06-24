@@ -33,9 +33,9 @@ export default function Driver({ user, dashboard } : InferGetServerSidePropsType
   return (
     <>
       <HeaderMenu pages={userMenuLinks(user?.id!)} />
-      <Container maxWidth='xl'>
+      <Container maxWidth='xl' sx={{ mb: 10, overflowX: 'hidden' }}>
         {/* description */}
-        <Grid container marginTop={14} >
+        <Grid container marginTop={14}>
           <Grid item sm={6} padding={2}>
             <Typography component='h1' variant="h4" sx={{ textTransform: 'capitalize' }}>
               Olá {user?.nome},
@@ -47,9 +47,9 @@ export default function Driver({ user, dashboard } : InferGetServerSidePropsType
         </Grid>
 
         {/* content */}
-        <Grid container marginTop={4}>
+        <Grid container marginTop={4} rowSpacing={2}>
           {/* driver infos */}
-          <Grid item sm={8} paddingX={2}>
+          <Grid item xs={12} md={8} paddingX={2}>
             <Card variant="outlined">
               <FormControl component='form' onSubmit={handleSubmit(updateUserInfos)}>
                 <CardContent>
@@ -121,7 +121,7 @@ export default function Driver({ user, dashboard } : InferGetServerSidePropsType
           </Grid>
 
           {/* dashboard */}
-          <Grid item sm={4} paddingX={2}>
+          <Grid item xs={12}md={4} paddingX={2}  sx={{ textAlign: 'center' }}>
             <Grid container direction='column' gap={1}>
               <Grid item>
                 <Card variant="outlined">

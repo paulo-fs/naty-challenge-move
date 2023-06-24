@@ -29,7 +29,7 @@ export function UserForm(props: UserFormProps) {
           />
       </Grid>
 
-      <Grid item xs={8} padding={1}>
+      <Grid item xs={12} sm={8} padding={1}>
         <Controller
           name="numeroDocumento"
           control={control}
@@ -44,7 +44,7 @@ export function UserForm(props: UserFormProps) {
           )}
         />
       </Grid>
-      <Grid item xs={4} padding={1}>
+      <Grid item xs={12} sm={4} padding={1}>
         <Controller
             name="tipoDocumento"
             control={control}
@@ -76,7 +76,7 @@ export function UserForm(props: UserFormProps) {
           />
       </Grid>
 
-      <Grid item xs={9} padding={1}>
+      <Grid item xs={12} sm={9} padding={1}>
         <Controller
             name="bairro"
             control={control}
@@ -91,7 +91,7 @@ export function UserForm(props: UserFormProps) {
             )}
           />
       </Grid>
-      <Grid item xs={3} padding={1}>
+      <Grid item xs={12} sm={3} padding={1}>
         <Controller
             name="numero"
             control={control}
@@ -107,7 +107,7 @@ export function UserForm(props: UserFormProps) {
           />
       </Grid>
 
-      <Grid item xs={9} padding={1}>
+      <Grid item xs={12} sm={9} padding={1}>
         <Controller
             name="cidade"
             control={control}
@@ -122,7 +122,7 @@ export function UserForm(props: UserFormProps) {
             )}
           />
       </Grid>
-      <Grid item xs={3} padding={1}>
+      <Grid item xs={12} sm={3} padding={1}>
         <Controller
             name="uf"
             control={control}
