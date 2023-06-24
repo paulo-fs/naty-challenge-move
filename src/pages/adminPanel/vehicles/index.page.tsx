@@ -114,11 +114,6 @@ export default function VehiclesPanel({ vehicles } : InferGetServerSidePropsType
 export const getServerSideProps: GetServerSideProps<{
   vehicles: IVehicle[] | null
 }> = async ({ req, res }) => {
-  res.setHeader(
-    "Cache-Control",
-    "public, s-maxage=10, stale-while-revalidate=30"
-  );
-
   try {
     const { vehicles } = await getAllVehicles()
     return {

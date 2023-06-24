@@ -83,11 +83,6 @@ export default function UsersPanel({ users } : InferGetServerSidePropsType<typeo
 export const getServerSideProps: GetServerSideProps<{
   users: IUser[] | null
 }> = async ({ req, res }) => {
-  res.setHeader(
-    "Cache-Control",
-    "public, s-maxage=10, stale-while-revalidate=49"
-  );
-
   try {
     const { users } = await getAllUsers()
     return {

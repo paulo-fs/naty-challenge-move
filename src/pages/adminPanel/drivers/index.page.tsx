@@ -83,11 +83,6 @@ export default function DriversPanel({ drivers } : InferGetServerSidePropsType<t
 export const getServerSideProps: GetServerSideProps<{
   drivers: IDriver[] | null
 }> = async ({ req, res }) => {
-  res.setHeader(
-    "Cache-Control",
-    "public, s-maxage=10, stale-while-revalidate=49"
-  );
-
   try {
     const { drivers } = await getAllDrivers()
     return {

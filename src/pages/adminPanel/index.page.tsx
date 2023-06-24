@@ -130,11 +130,6 @@ export const getServerSideProps: GetServerSideProps<{
     }
   }
 }> = async ({ req, res }) => {
-  res.setHeader(
-    "Cache-Control",
-    "public, s-maxage=10, stale-while-revalidate=49"
-  );
-
   const dashboard = {
     driver: {
       total: 0,

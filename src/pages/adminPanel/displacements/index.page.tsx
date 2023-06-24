@@ -60,11 +60,6 @@ export default function DisplacementsPanel({ displacements } : InferGetServerSid
 export const getServerSideProps: GetServerSideProps<{
   displacements: IDisplacement[] | null
 }> = async ({ req, res }) => {
-  res.setHeader(
-    "Cache-Control",
-    "public, s-maxage=10, stale-while-revalidate=49"
-  );
-
   try {
     const { displacements } = await getAllDisplacements()
     return {
