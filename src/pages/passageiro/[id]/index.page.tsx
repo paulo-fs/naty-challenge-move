@@ -90,7 +90,6 @@ export default function PassangerPage({ user } : InferGetServerSidePropsType<typ
         <Backdrop
           sx={{ color: '#fff', zIndex: 10 }}
           open={isLoading}
-          // onClick={handleClose}
         >
           <CircularProgress color="inherit" />
         </Backdrop>

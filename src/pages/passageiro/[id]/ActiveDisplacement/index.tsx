@@ -53,7 +53,7 @@ export function ActiveDisplacement({
             </CardContent>
           </Card>
         </Grid>
-      <Grid item sm={12} paddingX={2}>
+      <Grid item sm={12} paddingX={2} mt={4}>
         <Card elevation={0} sx={{ height: '100%' }}>
           <CardActions>
             <Button variant="contained" onClick={handleFinishDisplacement}
