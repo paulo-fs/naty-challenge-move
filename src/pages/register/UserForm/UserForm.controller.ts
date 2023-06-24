@@ -12,7 +12,7 @@ export function useUserForm() {
     numeroDocumento: z
       .string()
       .max(20, "Permitido até 20 caracteres")
-      .min(5, "Necessário pelo menos 5 caracteres"),
+      .min(2, "Necessário pelo menos 2 caracteres"),
     tipoDocumento: z
       .string()
       .max(4, "Permitido até 4 caracteres")
