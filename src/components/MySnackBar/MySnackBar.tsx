@@ -13,8 +13,8 @@ export function MySnackBar({
   return (
     <Snackbar
       anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right'
+        vertical: 'bottom',
+        horizontal: 'center'
       }}
       open={isOpen}
       autoHideDuration={2000}
