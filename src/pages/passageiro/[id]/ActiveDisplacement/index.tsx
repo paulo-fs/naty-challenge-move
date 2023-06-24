@@ -33,36 +33,36 @@ export function ActiveDisplacement({
       <Grid container marginTop={1}>
         <Grid item sm={12} paddingX={2}>
           <Card variant="outlined">
-            <CardContent sx={{ display: 'flex', justifyContent: 'space-around' }}>
-              <Box>
-                <Typography>
-                  Início do deslocamento
-                </Typography>
-                <Typography component='span' variant="h5">
-                  {dayjs(data?.startDisplacement).format('DD/MM [às] HH:mm')}
-                </Typography>
-              </Box>
-              <Box>
-                <Typography>
-                  Tempo decorrido
-                </Typography>
-                  <Timer
-                    startDate={data?.startDisplacement}
-                  />
-              </Box>
+            <CardContent>
+              <Grid container rowSpacing={4}>
+                <Grid item xs={12} md={6} sx={{ textAlign: 'center' }}>
+                  <Typography>
+                    Início do deslocamento
+                  </Typography>
+                  <Typography component='span' variant="h5">
+                    {dayjs(data?.startDisplacement).format('DD/MM [às] HH:mm')}
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={12} md={6} sx={{ textAlign: 'center' }}>
+                  <Typography>
+                    Tempo decorrido
+                  </Typography>
+                    <Timer
+                      startDate={data?.startDisplacement}
+                    />
+                </Grid>
+              </Grid>
             </CardContent>
           </Card>
         </Grid>
-      <Grid item sm={12} paddingX={2} mt={4}>
-        <Card elevation={0} sx={{ height: '100%' }}>
-          <CardActions>
-            <Button variant="contained" onClick={handleFinishDisplacement}
-              sx={{ width: 300, height: 64, mx: 'auto' }}
-            >
-              Cheguei no meu destino
-            </Button>
-          </CardActions>
-        </Card>
+      <Grid item paddingX={2} mt={4} mx='auto'>
+        <Button variant="contained" onClick={handleFinishDisplacement}
+          sx={{ width: '100%', maxWidth: 300, height: 64 }}
+          fullWidth
+        >
+          Cheguei no meu destino
+        </Button>
       </Grid>
     </Grid>
     </Box>

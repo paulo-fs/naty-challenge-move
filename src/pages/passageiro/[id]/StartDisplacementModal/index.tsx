@@ -1,4 +1,4 @@
-import { Box, Button, Modal, Paper, Typography } from "@mui/material";
+import { Box, Button, Grid, Modal, Paper, Typography } from "@mui/material";
 
 interface StartDisplacementModalProps {
   isModalOpen: boolean;
@@ -29,16 +29,17 @@ export function StartDisplacementModal(props: StartDisplacementModalProps) {
       open={isModalOpen}
       onClose={handleModal}
     >
-      <Box sx={{
+      <Grid container sx={{
         width: '100%',
         height: '100%',
-        display: 'grid',
         placeContent: 'center',
       }}>
         <Paper sx={{
           padding: 4,
-          width: 350,
+          width: '100%',
+          maxWidth: 350,
           display: 'flex',
+          flexWrap: 'wrap',
           flexDirection: 'column',
           gap: 2
         }}>
@@ -70,7 +71,7 @@ export function StartDisplacementModal(props: StartDisplacementModalProps) {
           </Box>
 
         </Paper>
-      </Box>
+      </Grid>
     </Modal>
   )
 }
