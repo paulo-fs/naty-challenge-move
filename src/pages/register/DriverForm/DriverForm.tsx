@@ -31,7 +31,7 @@ export function DriverForm(props: DriverFormProps) {
         />
       </Grid>
 
-      <Grid item xs={8} padding={1}>
+      <Grid item xs={12} sm={8} padding={1}>
         <Controller
             name="numeroHabilitacao"
             control={control}
@@ -48,7 +48,7 @@ export function DriverForm(props: DriverFormProps) {
             )}
           />
       </Grid>
-      <Grid item xs={4} padding={1}>
+      <Grid item xs={12} sm={4} padding={1}>
         <Controller
             name="categoriaHabilitacao"
             control={control}

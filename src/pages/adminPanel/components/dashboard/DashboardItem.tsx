@@ -9,9 +9,11 @@ export function DashboardItem(props: DashboardItemProps) {
   const { title, value } = props
   return (
     <>
-      <Typography variant="h5" color='gray'>{title}</Typography>
+      <Typography variant="h6" color='gray'>{title}</Typography>
       <Box borderBottom={1} width='100%' borderColor='gray' mt={1} />
-      <Typography variant="h5" color='primary'>{value}</Typography>
+      <Typography variant="h6" color='primary'>
+        {value}
+      </Typography>
     </>
   )
 }

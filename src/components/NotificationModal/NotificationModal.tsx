@@ -1,4 +1,4 @@
-import { Box, Button, Modal, Paper, Typography } from "@mui/material";
+import { Box, Button, Grid, Modal, Paper, Typography } from "@mui/material";
 import { INotificationModalInfos } from "./NotificationModal.controller";
 
 interface NotificationModalProps {
@@ -15,10 +15,9 @@ export function NotificationModal({
       open={isModalOpen}
       onClose={closeNotificationModal}
     >
-      <Box sx={{
+      <Grid container sx={{
         width: '100%',
         height: '100%',
-        display: 'grid',
         placeContent: 'center',
       }}>
         <Paper sx={{
@@ -36,7 +35,7 @@ export function NotificationModal({
           </Typography>
           <Button variant="contained" onClick={closeNotificationModal}>Fechar</Button>
         </Paper>
-      </Box>
+      </Grid>
     </Modal>
   )
 }

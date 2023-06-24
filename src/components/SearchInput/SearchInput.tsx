@@ -20,7 +20,7 @@ export function SearchInput(props: SearchInputProps) {
 
           <Grid item xs={12} sm={4} md={3} lg={2} paddingX={2} marginBottom={4}>
               <Button variant="outlined" fullWidth onClick={clearSearchInput}>
-                Limpar busca
+                Limpar
               </Button>
           </Grid>
     </Grid>

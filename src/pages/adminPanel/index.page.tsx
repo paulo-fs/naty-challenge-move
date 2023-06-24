@@ -24,7 +24,7 @@ export default function AdminPanel({ dashboard } : InferGetServerSidePropsType<t
       <Container maxWidth='xl'>
         {/* head description */}
         <Grid container marginTop={14} >
-          <Grid item sm={6} padding={2}>
+          <Grid item padding={2}>
             <Typography component='h1' variant="h4" sx={{ textTransform: 'capitalize' }}>
               Painel administrativo
             </Typography>
@@ -35,8 +35,8 @@ export default function AdminPanel({ dashboard } : InferGetServerSidePropsType<t
         </Grid>
 
         {/* content */}
-        <Grid container marginTop={4} paddingX={4}>
-          <Grid item xs={6} padding={2}>
+        <Grid container marginTop={4}>
+          <Grid item xs={12} md={6} padding={2}>
             <Card variant="outlined">
               <CardContent>
                 <Typography variant="h4">Usuários</Typography>
@@ -50,7 +50,7 @@ export default function AdminPanel({ dashboard } : InferGetServerSidePropsType<t
             </Card>
           </Grid>
 
-          <Grid item xs={6} padding={2}>
+          <Grid item xs={12} md={6} padding={2}>
             <Card variant="outlined">
               <CardContent>
                 <Typography variant="h4">Motoristas</Typography>
@@ -64,7 +64,7 @@ export default function AdminPanel({ dashboard } : InferGetServerSidePropsType<t
             </Card>
           </Grid>
 
-          <Grid item xs={6} padding={2}>
+          <Grid item xs={12} md={6}  padding={2}>
             <Card variant="outlined">
               <CardContent>
                 <Typography variant="h4">Veículos</Typography>
@@ -78,7 +78,7 @@ export default function AdminPanel({ dashboard } : InferGetServerSidePropsType<t
             </Card>
           </Grid>
 
-          <Grid item xs={6} padding={2}>
+          <Grid xs={12} md={6}  padding={2}>
             <Card variant="outlined">
               <CardContent>
                 <Typography variant="h4">Deslocamentos</Typography>
@@ -92,13 +92,13 @@ export default function AdminPanel({ dashboard } : InferGetServerSidePropsType<t
                   </DashboardItemContainer>
                   <DashboardItemContainer>
                     <DashboardItem
-                      title="Deslocamentos(completos)"
+                      title="Completos"
                       value={dashboard.displacement.totalComplete}
                     />
                   </DashboardItemContainer>
                   <DashboardItemContainer>
                     <DashboardItem
-                      title="Deslocamentos(cancelados)"
+                      title="Cancelados"
                       value={dashboard.displacement.totalCancelled}
                     />
                   </DashboardItemContainer>

@@ -56,7 +56,7 @@ export default function VehiclesPanel({ vehicles } : InferGetServerSidePropsType
 
         {/* content */}
         <Grid container marginTop={4} paddingX={4}>
-          <Grid item xs={10}>
+          <Grid item xs={12} sm={8} md={9}>
             <SearchInput
               clearSearchInput={clearSearchInput}
               handleSearch={handleSearch}
@@ -64,7 +64,7 @@ export default function VehiclesPanel({ vehicles } : InferGetServerSidePropsType
             />
           </Grid>
 
-          <Grid item xs={2}>
+          <Grid item xs={12} sm={4} md={3} mb={4}>
             <Link href='/adminpanel/vehicles/register'>
               <Button variant="contained" fullWidth>
                 Cadastrar veículo

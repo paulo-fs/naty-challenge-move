@@ -47,9 +47,9 @@ export default function Driver({ driver, dashboard } : InferGetServerSidePropsTy
         </Grid>
 
         {/* content */}
-        <Grid container marginTop={4}>
+        <Grid container marginTop={4} rowSpacing={2}>
           {/* driver infos */}
-          <Grid item sm={8} paddingX={2}>
+          <Grid item xs={12} sm={8} paddingX={2}>
             <Card variant="outlined">
               <FormControl component='form' onSubmit={handleSubmit(updateDriverInfos)}>
                 <CardContent>
@@ -121,7 +121,7 @@ export default function Driver({ driver, dashboard } : InferGetServerSidePropsTy
           </Grid>
 
           {/* dashboard */}
-          <Grid item sm={4} paddingX={2}>
+          <Grid item xs={12} sm={4} paddingX={2} sx={{ textAlign: 'center' }}>
             <Grid container direction='column' gap={1}>
               <Grid item>
                 <Card variant="outlined">

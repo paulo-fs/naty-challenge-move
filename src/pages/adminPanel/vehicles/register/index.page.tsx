@@ -23,9 +23,9 @@ export default function VehiclesPanel() {
       <HeaderMenu
         pages={menuLinks}
       />
-      <Container maxWidth='xl'>
+      <Container maxWidth='xl' sx={{ mb: 4 }}>
         {/* head description */}
-        <Grid container marginTop={14} paddingX={4} maxWidth={500} width='100%' marginX='auto'>
+        <Grid container marginTop={14} maxWidth={500} width='100%' marginX='auto'>
           <Grid item  padding={2}>
             <Typography component='h1' variant="h4" sx={{ textTransform: 'capitalize' }}>
               Registrar novo veículo
@@ -37,7 +37,7 @@ export default function VehiclesPanel() {
         </Grid>
 
         {/* content */}
-        <Grid container marginTop={4} paddingX={4} maxWidth={500} width='100%' marginX='auto'>
+        <Grid container marginTop={4} maxWidth={500} width='100%' marginX='auto'>
           <FormControl component='form' onSubmit={handleSubmit(submitForm)}>
             <Card variant="outlined" elevation={0} sx={{ width: '100%' }}>
               <CardContent>
