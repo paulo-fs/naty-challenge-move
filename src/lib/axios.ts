@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const axiosApi = axios.create({
-  baseURL: "https://api-deslocamento.herokuapp.com/api/v1/",
+  baseURL: process.env.baseURL,
   headers: {
     Accept: "application/json",
   },
