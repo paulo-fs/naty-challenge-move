@@ -58,7 +58,16 @@ export function HeaderMenu(data: HeaderMenuProps) {
             >
               {pages && pages.map((page) => (
                 <MenuItem key={page.title}>
-                  <Typography>{page.title}</Typography>
+                  <Link href={`/${page.url.toLowerCase()}`} key={page.title}>
+                    <Button onClick={handleCloseUserMenu}>{page.title}</Button>
+                  </Link>
+                </MenuItem>
+              ))}
+              {updateSettings && updateSettings.map((setting) => (
+                <MenuItem key={setting.title}>
+                  <Link href={setting.url!}>
+                    <Button>{setting.title}</Button>
+                  </Link>
                 </MenuItem>
               ))}
             </Menu>
