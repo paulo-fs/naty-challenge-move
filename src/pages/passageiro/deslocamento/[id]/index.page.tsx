@@ -29,7 +29,7 @@ export default function DriverDisplacement({ user, displacements } : InferGetSer
       <Container maxWidth='xl'>
         {/* head description */}
         <Grid container marginTop={14} >
-          <Grid item sm={6} padding={2}>
+          <Grid padding={2}>
             <Typography component='h1' variant="h4" sx={{ textTransform: 'capitalize' }}>
               Deslocamentos
             </Typography>

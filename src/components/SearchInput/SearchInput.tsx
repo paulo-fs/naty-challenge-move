@@ -10,15 +10,15 @@ export function SearchInput(props: SearchInputProps) {
   const { searchInputValue, handleSearch, clearSearchInput } = props;
 
   return (
-    <Grid container>
-      <Grid item xs={10}>
+    <Grid container rowSpacing={2}>
+      <Grid item xs={12} sm={8} md={9} lg={10}>
             <TextField fullWidth placeholder="Busque por..." size="small"
               value={searchInputValue}
               onChange={handleSearch}
             />
           </Grid>
 
-          <Grid item xs={2} paddingX={2} marginBottom={4}>
+          <Grid item xs={12} sm={4} md={3} lg={2} paddingX={2} marginBottom={4}>
               <Button variant="outlined" fullWidth onClick={clearSearchInput}>
                 Limpar busca
               </Button>
