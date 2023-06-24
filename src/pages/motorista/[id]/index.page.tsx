@@ -171,7 +171,7 @@ export const getServerSideProps: GetServerSideProps<{
 }> = async ({ req, res, params }) => {
   res.setHeader(
     "Cache-Control",
-    "public, s-maxage=10, stale-while-revalidate=49"
+    "public, s-maxage=10, stale-while-revalidate=30"
   );
 
   const driverId = String(params?.id);
