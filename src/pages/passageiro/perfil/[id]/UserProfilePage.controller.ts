@@ -93,10 +93,16 @@ export function useUserProfilePage(user: IUser | null) {
         redirect: "/",
       });
     } catch (err: any) {
+      const unknowError =
+        err.response.data ===
+        "An error occurred while updating the entries. See the inner exception for details.";
+
       defineNotificationModalInfos({
-        message: "Seu perfil foi excluído com sucesso. Até breve...",
-        title: "Sucesso",
-        redirect: "/",
+        message: unknowError
+          ? "Houve um erro desconhecido, se ele persistir, entre em contato com o atendimento"
+          : "Houve um erro na exclusão do seu cadastro, confirme ele realmente existe. Saia da aplicacação e tente entrar novamente.",
+        title: "Ops...",
+        error: true,
       });
     }
   }
