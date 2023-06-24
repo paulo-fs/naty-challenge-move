@@ -91,12 +91,16 @@ export function HeaderMenu(data: HeaderMenuProps) {
               </IconButton>
             </Tooltip>
             <Menu
-              sx={{ mt: 6 }}
+              sx={{ mt: 1 }}
               id='menu-appbar'
               anchorEl={anchorElUser}
               anchorOrigin={{
-                vertical: 'top',
+                vertical: 'bottom',
                 horizontal: 'right',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right'
               }}
               open={!!anchorElUser}
               onClose={handleCloseUserMenu}
@@ -104,7 +108,7 @@ export function HeaderMenu(data: HeaderMenuProps) {
               {updateSettings && updateSettings.map((setting) => (
                 <Link key={setting.url} href={setting.url ?? ''} prefetch>
                   <MenuItem onClick={setting.action}>
-                    <Typography>{setting.title}</Typography>
+                    <Button>{setting.title}</Button>
                   </MenuItem>
                 </Link>
               ))}
