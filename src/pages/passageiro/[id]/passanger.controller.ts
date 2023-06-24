@@ -1,3 +1,4 @@
+import { IMenuLink } from "@/components/HeaderMenu/HeaderMenu.props";
 import { useMySnackBar } from "@/components/MySnackBar/MySnackBar.controller";
 import { useNotificationModal } from "@/components/NotificationModal/NotificationModal.controller";
 import { IDisplacementOnStore } from "@/dataTypes/displacement.dto";

@@ -9,10 +9,10 @@ import { getUserById } from "@/services/requests/user.request";
 
 import { getAllDisplacements } from "@/services/requests/displacement.request";
 import { useDeslocamentoPage } from "./deslocamento.controller";
+import { userMenuLinks } from "@/constants/userMenuLinks";
 
 export default function DriverDisplacement({ user, displacements } : InferGetServerSidePropsType<typeof getServerSideProps>) {
   const {
-    menuLinks,
     tableHead,
     tableData,
     filteredTableData,
@@ -24,7 +24,7 @@ export default function DriverDisplacement({ user, displacements } : InferGetSer
   return (
     <>
       <HeaderMenu
-        pages={menuLinks}
+        pages={userMenuLinks(user?.id!)}
       />
       <Container maxWidth='xl'>
         {/* head description */}

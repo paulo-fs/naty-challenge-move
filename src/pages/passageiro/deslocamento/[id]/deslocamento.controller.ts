@@ -9,16 +9,6 @@ export function useDeslocamentoPage(
   displacements: IDisplacement[] | null
 ) {
   const [searchInputValue, setSearchInputValue] = React.useState("");
-  const menuLinks: IMenuLink[] = [
-    {
-      title: "Perfil",
-      url: `passageiro/${user?.id}`,
-    },
-    {
-      title: "Deslocamentos",
-      url: `passageiro/deslocamento/${user?.id}`,
-    },
-  ];
 
   const tableHead = [
     { label: "id" },
@@ -65,7 +55,6 @@ export function useDeslocamentoPage(
   }
 
   return {
-    menuLinks,
     tableHead,
     tableData,
     filteredTableData,

@@ -14,6 +14,7 @@ import iconCar from '@/assets/icons/car.svg'
 import { getVehicleInputData } from "@/services/requests/vehicle.request";
 import { IVehicleSelectInputData } from "@/dataTypes/vehicle.dto";
 import { ActiveDisplacement } from "./ActiveDisplacement";
+import { userMenuLinks } from "@/constants/userMenuLinks";
 
 export default function PassangerPage({ user, drivers, vehicles } : InferGetServerSidePropsType<typeof getServerSideProps>) {
   const {
@@ -39,7 +40,9 @@ export default function PassangerPage({ user, drivers, vehicles } : InferGetServ
 
   return (
     <>
-      <HeaderMenu />
+      <HeaderMenu
+        pages={userMenuLinks(user?.id!)}
+      />
       <Container maxWidth='xl'>
         <Grid container marginTop={14} >
           <Grid item sm={6} padding={2}>
