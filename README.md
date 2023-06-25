@@ -1,10 +1,10 @@
-<!-- # :clapper: Deploy
+# Deploy
 
 <ul>
   <li>
-    <a href="https://movenaty.netlify.app/home">MoveNaty</a>
+    <a href="https://naty-challenge-move.vercel.app/">Move</a>
   </li>
-</ul> -->
+</ul>
 
 # Technologies and Libraries
 
