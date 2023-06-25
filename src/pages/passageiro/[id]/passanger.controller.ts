@@ -53,8 +53,8 @@ export function usePassanger(userId: string | undefined) {
 
   async function askACar() {
     setIsLoading(true);
-    const vehicle = await getACar();
-    const driver = await getADriver();
+    const vehicle = await getFirsVehicle();
+    const driver = await getFirstDriver();
 
     const hasAProblema = !vehicle || !driver;
     if (hasAProblema) {
@@ -72,22 +72,20 @@ export function usePassanger(userId: string | undefined) {
     handleStartModal();
   }
 
-  async function getACar() {
+  async function getFirsVehicle() {
     try {
       const { vehicles } = await getAllVehicles();
-      const hasVehicle = vehicles.length > 0;
-      return hasVehicle ? vehicles[0] : null;
+      return vehicles?.[0];
     } catch (err: any) {
       console.log("car error >>>", err.message.data);
       return null;
     }
   }
 
-  async function getADriver() {
+  async function getFirstDriver() {
     try {
       const { drivers } = await getAllDrivers();
-      const hasDriver = drivers.length > 0;
-      return hasDriver ? drivers[0] : null;
+      return drivers?.[0];
     } catch (err: any) {
       console.log("driver error >>>", err.messsage.data);
       return null;
