@@ -22,8 +22,3 @@ export interface IDriver {
   catergoriaHabilitacao: string;
   vencimentoHabilitacao: string;
 }
-
-export interface IDriverSelectInputData {
-  id: string;
-  nome: string;
-}
