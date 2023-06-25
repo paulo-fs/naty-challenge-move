@@ -1,9 +1,8 @@
-import { newDateOnBr } from "@/lib/dayjs";
 import dayjs from "dayjs";
-import React from "react";
+import { useEffect, useState } from "react";
 
 export function useTimer(startDate: string | undefined) {
-  const [secondsPassed, setSecondsPassed] = React.useState(0);
+  const [secondsPassed, setSecondsPassed] = useState(0);
 
   const startTime = dayjs(dayjs(startDate).toISOString()).unix();
   const endTime = dayjs(new Date()).unix();
@@ -14,7 +13,7 @@ export function useTimer(startDate: string | undefined) {
   const minutes = String(minutesAmount).padStart(2, "0");
   const seconds = String(secondsAmount).padStart(2, "0");
 
-  React.useEffect(() => {
+  useEffect(() => {
     let interval: any;
     const activeCycle = true;
 

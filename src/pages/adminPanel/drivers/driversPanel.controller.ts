@@ -1,12 +1,13 @@
+import { ChangeEvent, useState } from "react";
+
 import { useConfirmModal } from "@/components/ConfirmModal/ConfirmModal.controller";
 import { useNotificationModal } from "@/components/NotificationModal/NotificationModal.controller";
-import { IDriver } from "@/dataTypes/driver.dto";
 import { deleteDriver } from "@/services/requests/driver.request";
-import React from "react";
+import { IDriver } from "@/dataTypes/driver.dto";
 
 export function useDriverPanel(drivers: IDriver[] | null) {
-  const [searchInputValue, setSearchInputValue] = React.useState("");
-  const [driverId, setDriverId] = React.useState("");
+  const [searchInputValue, setSearchInputValue] = useState("");
+  const [driverId, setDriverId] = useState("");
 
   const { confirmModalState, handleCloseConfirmModal, setConfirmModal } =
     useConfirmModal();
@@ -62,7 +63,7 @@ export function useDriverPanel(drivers: IDriver[] | null) {
     setSearchInputValue("");
   }
 
-  function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
+  function handleSearch(event: ChangeEvent<HTMLInputElement>) {
     setSearchInputValue(event.target.value);
   }
 

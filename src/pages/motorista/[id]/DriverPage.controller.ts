@@ -1,17 +1,20 @@
-import { IMenuLink } from "@/components/HeaderMenu/HeaderMenu.props";
-import { useNotificationModal } from "@/components/NotificationModal/NotificationModal.controller";
-import { IDriver, IDriverUpdate } from "@/dataTypes/driver.dto";
-import { useDriverForm } from "@/pages/register/DriverForm/DriverForm.controller";
-import { deleteDriver, updateDriver } from "@/services/requests/driver.request";
-import { zodResolver } from "@hookform/resolvers/zod";
-import dayjs from "dayjs";
+import { MouseEvent, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import React from "react";
+import dayjs from "dayjs";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
+import { IMenuLink } from "@/components/HeaderMenu/HeaderMenu.props";
+import { IDriver, IDriverUpdate } from "@/dataTypes/driver.dto";
+
+import { useNotificationModal } from "@/components/NotificationModal/NotificationModal.controller";
+import { useDriverForm } from "@/pages/register/DriverForm/DriverForm.controller";
+
+import { deleteDriver, updateDriver } from "@/services/requests/driver.request";
+
 export function useDriverPage(driver: IDriver | null) {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const openDeleteMenu = Boolean(anchorEl);
   const router = useRouter();
 
@@ -107,7 +110,7 @@ export function useDriverPage(driver: IDriver | null) {
     }
   }
 
-  function handleOpenDeleteMenu(event: React.MouseEvent<HTMLButtonElement>) {
+  function handleOpenDeleteMenu(event: MouseEvent<HTMLButtonElement>) {
     setAnchorEl(event.currentTarget);
   }
 
@@ -115,7 +118,7 @@ export function useDriverPage(driver: IDriver | null) {
     setAnchorEl(null);
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!driver) router.replace("/");
   }, []);
 

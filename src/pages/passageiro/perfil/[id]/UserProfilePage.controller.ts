@@ -1,17 +1,17 @@
-import React from "react";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
 import { useNotificationModal } from "@/components/NotificationModal/NotificationModal.controller";
 import { useUserForm } from "@/pages/register/UserForm/UserForm.controller";
 
 import { IUser, IUserUpdate } from "@/dataTypes/passanger.dto";
 import { deleteUser, updateUser } from "@/services/requests/user.request";
+import { MouseEvent, useEffect, useState } from "react";
 
 export function useUserProfilePage(user: IUser | null) {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const openDeleteMenu = Boolean(anchorEl);
   const router = useRouter();
 
@@ -107,7 +107,7 @@ export function useUserProfilePage(user: IUser | null) {
     }
   }
 
-  function handleOpenDeleteMenu(event: React.MouseEvent<HTMLButtonElement>) {
+  function handleOpenDeleteMenu(event: MouseEvent<HTMLButtonElement>) {
     setAnchorEl(event.currentTarget);
   }
 
@@ -115,7 +115,7 @@ export function useUserProfilePage(user: IUser | null) {
     setAnchorEl(null);
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!user) router.replace("/");
   }, []);
 

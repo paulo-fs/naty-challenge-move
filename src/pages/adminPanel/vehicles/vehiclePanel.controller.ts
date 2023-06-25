@@ -1,21 +1,24 @@
-import { IVehicle, IVehicleUpdate } from "@/dataTypes/vehicle.dto";
+import { ChangeEvent, useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+
 import {
   deleteVehicle,
   getVehicleById,
   updateVehicle,
 } from "@/services/requests/vehicle.request";
-import React from "react";
+
 import { useFormModal } from "@/components/FormModal/FormModal.controller";
 import { useVehicleForm } from "./register/VehicleForm/VehicleForm.controller";
 import { useNotificationModal } from "@/components/NotificationModal/NotificationModal.controller";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { useConfirmModal } from "@/components/ConfirmModal/ConfirmModal.controller";
 
+import { IVehicle, IVehicleUpdate } from "@/dataTypes/vehicle.dto";
+
 export function useVeiclePanel(vehicles: IVehicle[] | null) {
-  const [vehicleId, setVehicleId] = React.useState("");
-  const [searchInputValue, setSearchInputValue] = React.useState("");
+  const [vehicleId, setVehicleId] = useState("");
+  const [searchInputValue, setSearchInputValue] = useState("");
 
   const { isFormModalOpen, handleOpenCloseFormModal } = useFormModal();
   const { confirmModalState, handleCloseConfirmModal, setConfirmModal } =
@@ -72,7 +75,7 @@ export function useVeiclePanel(vehicles: IVehicle[] | null) {
     };
   });
 
-  function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
+  function handleSearch(event: ChangeEvent<HTMLInputElement>) {
     setSearchInputValue(event.target.value);
   }
 

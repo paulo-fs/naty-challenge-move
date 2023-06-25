@@ -1,7 +1,7 @@
-import { IDisplacementOnStore } from "@/dataTypes/displacement.dto";
-import { Box, Button, Card, CardActions, CardContent, Grid, Typography } from "@mui/material";
 import dayjs from "dayjs";
+import { Box, Button, Card, CardContent, Grid, Typography } from "@mui/material";
 import { Timer } from "../Timer/Timer";
+import { IDisplacementOnStore } from "@/dataTypes/displacement.dto";
 
 interface ActiveDisplacementProps {
   handleFinishDisplacement: () => Promise<void>

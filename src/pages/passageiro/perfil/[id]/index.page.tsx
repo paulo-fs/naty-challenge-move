@@ -3,13 +3,13 @@ import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { Button, Card, CardActions, CardContent, CircularProgress, Container, FormControl, Grid, Menu, MenuItem, Typography } from "@mui/material";
 import { HeaderMenu, NotificationModal } from "@/components";
 
-import { DriverForm } from "@/pages/register/DriverForm/DriverForm";
-import { getAllDisplacements } from "@/services/requests/displacement.request";
 import { useUserProfilePage } from "./UserProfilePage.controller";
-import { userMenuLinks } from "@/constants/userMenuLinks";
-import { getUserById } from "@/services/requests/user.request";
-import { IUser } from "@/dataTypes/passanger.dto";
 import { UserForm } from "@/pages/register/UserForm/Userform";
+import { userMenuLinks } from "@/constants/userMenuLinks";
+import { IUser } from "@/dataTypes/passanger.dto";
+
+import { getAllDisplacements } from "@/services/requests/displacement.request";
+import { getUserById } from "@/services/requests/user.request";
 
 export default function Driver({ user, dashboard } : InferGetServerSidePropsType<typeof getServerSideProps>) {
   const {

@@ -1,16 +1,16 @@
+import Link from "next/link";
+
 import { Button, Card, CardActions, CardContent, Container, FormControl, Grid, TextField, Typography } from "@mui/material";
 import { HeaderMenu, NotificationModal } from "@/components";
-
-import Link from "next/link";
-import { menuLinks } from "@/constants/adminPanelLinks";
 import { VehicleForm } from "./VehicleForm/VehicleForm";
+
 import { useRegister } from "./register.controller";
+import { menuLinks } from "@/constants/adminPanelLinks";
 
 export default function VehiclesPanel() {
   const {
     handleSubmit,
     submitForm,
-    isSubmitting,
     errors,
     control,
     isModalOpen,

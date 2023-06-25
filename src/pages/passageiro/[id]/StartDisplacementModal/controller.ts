@@ -1,8 +1,8 @@
-import React from "react";
+import { useState } from "react";
 
 export function useStartDisplacementModal() {
-  const [isStartModalOpen, setIsStartModalOpen] = React.useState(false);
-  const [isSuccessStart, setIsSuccessStart] = React.useState(false);
+  const [isStartModalOpen, setIsStartModalOpen] = useState(false);
+  const [isSuccessStart, setIsSuccessStart] = useState(false);
 
   function handleStartModal() {
     setIsStartModalOpen(!isStartModalOpen);

@@ -1,11 +1,13 @@
+import Link from "next/link";
+
+import { Box, Button, Card, CardActions, CardContent, CircularProgress, Container, FormControl, Grid, Typography } from "@mui/material";
 import { RadioGroupClientDriver } from "@/components/RadioGroupClientDriver/RadioGroupClientDriver";
 import { Bolt } from "@mui/icons-material";
-import { Box, Button, Card, CardActions, CardContent, CircularProgress, Container, FormControl, Grid, TextField, Typography } from "@mui/material";
-import Link from "next/link";
+import { NotificationModal } from "@/components";
+
+import { DriverForm } from "./DriverForm/DriverForm";
 import { useRegister } from "./Register.controller";
 import { UserForm } from "./UserForm/Userform";
-import { DriverForm } from "./DriverForm/DriverForm";
-import { NotificationModal } from "@/components";
 
 export default function Register() {
   const {

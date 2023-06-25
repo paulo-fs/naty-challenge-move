@@ -1,8 +1,8 @@
-import React from "react";
+import { useState } from "react";
 import { z } from "zod";
 
 export function useDriverForm() {
-  const [isDisabled, setIsDisabled] = React.useState(true);
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const driverFormSchema = z.object({
     nome: z

@@ -1,14 +1,15 @@
+import { ChangeEvent, useState } from "react";
+import dayjs from "dayjs";
+
 import { IMenuLink } from "@/components/HeaderMenu/HeaderMenu.props";
 import { IDisplacement } from "@/dataTypes/displacement.dto";
 import { IDriver } from "@/dataTypes/driver.dto";
-import dayjs from "dayjs";
-import React from "react";
 
 export function useDeslocamentoPage(
   driver: IDriver | null,
   displacements: IDisplacement[] | null
 ) {
-  const [searchInputValue, setSearchInputValue] = React.useState("");
+  const [searchInputValue, setSearchInputValue] = useState("");
   const menuLinks: IMenuLink[] = [
     {
       title: "Perfil",
@@ -60,7 +61,7 @@ export function useDeslocamentoPage(
     setSearchInputValue("");
   }
 
-  function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
+  function handleSearch(event: ChangeEvent<HTMLInputElement>) {
     setSearchInputValue(event.target.value);
   }
 

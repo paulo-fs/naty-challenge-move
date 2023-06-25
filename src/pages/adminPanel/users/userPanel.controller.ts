@@ -1,12 +1,13 @@
+import { ChangeEvent, useState } from "react";
+
 import { useConfirmModal } from "@/components/ConfirmModal/ConfirmModal.controller";
 import { useNotificationModal } from "@/components/NotificationModal/NotificationModal.controller";
-import { IUser } from "@/dataTypes/passanger.dto";
 import { deleteUser } from "@/services/requests/user.request";
-import React from "react";
+import { IUser } from "@/dataTypes/passanger.dto";
 
 export function useUserPanel(users: IUser[] | null) {
-  const [searchInputValue, setSearchInputValue] = React.useState("");
-  const [userId, setUserId] = React.useState("");
+  const [searchInputValue, setSearchInputValue] = useState("");
+  const [userId, setUserId] = useState("");
 
   const { confirmModalState, handleCloseConfirmModal, setConfirmModal } =
     useConfirmModal();
@@ -68,7 +69,7 @@ export function useUserPanel(users: IUser[] | null) {
     setSearchInputValue("");
   }
 
-  function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
+  function handleSearch(event: ChangeEvent<HTMLInputElement>) {
     setSearchInputValue(event.target.value);
   }
 

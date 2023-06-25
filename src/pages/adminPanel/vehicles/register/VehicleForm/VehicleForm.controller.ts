@@ -1,8 +1,8 @@
-import React from "react";
+import { useState } from "react";
 import { z } from "zod";
 
 export function useVehicleForm() {
-  const [isDisabled, setIsDisabled] = React.useState(true);
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const vehicleFormSchema = z.object({
     marcaModelo: z.coerce

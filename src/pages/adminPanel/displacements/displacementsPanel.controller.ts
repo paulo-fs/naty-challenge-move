@@ -1,9 +1,9 @@
-import { IDisplacement } from "@/dataTypes/displacement.dto";
+import { ChangeEvent, useState } from "react";
 import dayjs from "dayjs";
-import React from "react";
+import { IDisplacement } from "@/dataTypes/displacement.dto";
 
 export function useDisplacementPanel(displacements: IDisplacement[] | null) {
-  const [searchInputValue, setSearchInputValue] = React.useState("");
+  const [searchInputValue, setSearchInputValue] = useState("");
 
   const tableHead = [
     { label: "id" },
@@ -53,7 +53,7 @@ export function useDisplacementPanel(displacements: IDisplacement[] | null) {
     setSearchInputValue("");
   }
 
-  function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
+  function handleSearch(event: ChangeEvent<HTMLInputElement>) {
     setSearchInputValue(event.target.value);
   }
 

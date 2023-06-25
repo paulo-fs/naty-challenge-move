@@ -1,11 +1,17 @@
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+
 import { useMySnackBar } from "@/components/MySnackBar/MySnackBar.controller";
 import { useNotificationModal } from "@/components/NotificationModal/NotificationModal.controller";
+import { useStartDisplacementModal } from "./StartDisplacementModal/controller";
+
 import { IDisplacementOnStore } from "@/dataTypes/displacement.dto";
 import {
   recoverDisplacementOnStore,
   removeDisplacementOnStore,
   saveDisplacementOnStore,
 } from "@/helpers/displacementStore";
+
 import {
   finishDisplacement,
   getDisplacementById,
@@ -13,18 +19,15 @@ import {
 } from "@/services/requests/displacement.request";
 import { getAllDrivers } from "@/services/requests/driver.request";
 import { getAllVehicles } from "@/services/requests/vehicle.request";
-import { useRouter } from "next/router";
-import React from "react";
-import { useStartDisplacementModal } from "./StartDisplacementModal/controller";
 
 export function usePassanger(userId: string | undefined) {
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [driverAndVehicleId, setCarAndVehicleId] = React.useState({
+  const [isLoading, setIsLoading] = useState(false);
+  const [driverAndVehicleId, setCarAndVehicleId] = useState({
     driverId: "",
     vehicleId: "",
   });
   const [activeDisplacement, setActiveDisplacement] =
-    React.useState<IDisplacementOnStore | null>(null);
+    useState<IDisplacementOnStore | null>(null);
 
   const {
     isStartModalOpen,
@@ -169,7 +172,7 @@ export function usePassanger(userId: string | undefined) {
     }
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (userId === undefined) {
       router.replace("/");
       return;

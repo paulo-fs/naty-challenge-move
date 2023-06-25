@@ -1,12 +1,14 @@
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 import { useRadioGroupClientDriver } from "@/components/RadioGroupClientDriver/RadioGroupClientDriver.controller";
 import { useDriverForm } from "./DriverForm/DriverForm.controller";
 import { useUserForm } from "./UserForm/UserForm.controller";
-import { createDriver } from "@/services/requests/driver.request";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { createUser } from "@/services/requests/user.request";
 import { useNotificationModal } from "@/components/NotificationModal/NotificationModal.controller";
+
+import { createDriver } from "@/services/requests/driver.request";
+import { createUser } from "@/services/requests/user.request";
 
 export function useRegister() {
   const { driverFormSchema, defaultDriverValues } = useDriverForm();

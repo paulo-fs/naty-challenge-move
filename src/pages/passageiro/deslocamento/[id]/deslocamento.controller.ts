@@ -1,14 +1,13 @@
-import { IMenuLink } from "@/components/HeaderMenu/HeaderMenu.props";
+import { ChangeEvent, useState } from "react";
+import dayjs from "dayjs";
 import { IDisplacement } from "@/dataTypes/displacement.dto";
 import { IUser } from "@/dataTypes/passanger.dto";
-import dayjs from "dayjs";
-import React from "react";
 
 export function useDeslocamentoPage(
   user: IUser | null,
   displacements: IDisplacement[] | null
 ) {
-  const [searchInputValue, setSearchInputValue] = React.useState("");
+  const [searchInputValue, setSearchInputValue] = useState("");
 
   const tableHead = [
     { label: "id" },
@@ -50,7 +49,7 @@ export function useDeslocamentoPage(
     setSearchInputValue("");
   }
 
-  function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
+  function handleSearch(event: ChangeEvent<HTMLInputElement>) {
     setSearchInputValue(event.target.value);
   }
 

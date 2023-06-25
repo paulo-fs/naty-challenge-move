@@ -2,12 +2,12 @@ import { useNotificationModal } from "@/components/NotificationModal/Notificatio
 import { useRadioGroupClientDriver } from "@/components/RadioGroupClientDriver/RadioGroupClientDriver.controller";
 import { axiosApi } from "@/lib/axios";
 import { useRouter } from "next/router";
-import React from "react";
+import { useState } from "react";
 
 export function useLoginForm() {
-  const [showPassword, setShowPassword] = React.useState(false);
-  const [userId, setUserId] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [userId, setUserId] = useState("");
+  const [password, setPassword] = useState("");
 
   const { radioGroupValue, handleRadioGroupChange } =
     useRadioGroupClientDriver();
