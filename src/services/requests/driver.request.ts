@@ -1,37 +1,26 @@
+import { axiosApi } from "@/lib/axios";
 import {
   IDriver,
   IDriverCreate,
   IDriverDelete,
-  IDriverSelectInputData,
   IDriverUpdate,
 } from "@/dataTypes/driver.dto";
-import { axiosApi } from "@/lib/axios";
-
-export async function getDriversInputList(): Promise<{
-  drivers: IDriverSelectInputData[];
-}> {
-  const { data } = await axiosApi.get("/Condutor");
-  const drivers = data.map((driver: IDriver) => {
-    return {
-      id: driver.id,
-      nome: driver.nome,
-    };
-  });
-
-  return {
-    drivers,
-  };
-}
 
 export async function getAllDrivers(): Promise<{ drivers: IDriver[] }> {
-  const { data } = await axiosApi.get("/Condutor");
+  const { data } = await axiosApi({
+    method: "GET",
+    url: "/Condutor",
+  });
   return {
     drivers: data,
   };
 }
 
 export async function getDriverById(id: string): Promise<{ driver: IDriver }> {
-  const { data } = await axiosApi.get(`/Condutor/${id}`);
+  const { data } = await axiosApi({
+    method: "GET",
+    url: `/Condutor/${id}`,
+  });
   return {
     driver: data,
   };

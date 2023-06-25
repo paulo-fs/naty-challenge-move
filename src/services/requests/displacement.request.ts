@@ -1,12 +1,13 @@
+import { axiosApi } from "@/lib/axios";
+import { newDateOnBr } from "@/lib/dayjs";
+
+import { calculateFinalDistanceInKm } from "@/helpers/caculateFinalDistanceInKm";
 import {
   IDisplacement,
   IDisplacementCreate,
   IDisplacementRequiredData,
   IDisplacementUpdate,
 } from "@/dataTypes/displacement.dto";
-import { calculateFinalDistanceInKm } from "@/helpers/caculateFinalDistanceInKm";
-import { axiosApi } from "@/lib/axios";
-import { newDateOnBr } from "@/lib/dayjs";
 
 export async function startDisplacement(
   requestData: IDisplacementRequiredData
@@ -37,7 +38,10 @@ export async function startDisplacement(
 export async function getDisplacementById(
   id: string
 ): Promise<{ displacement: IDisplacement }> {
-  const { data } = await axiosApi(`/Deslocamento/${id}`);
+  const { data } = await axiosApi({
+    method: "GET",
+    url: `/Deslocamento/${id}`,
+  });
 
   return {
     displacement: data,
@@ -53,7 +57,10 @@ type FinishProps = {
 export async function getAllDisplacements(): Promise<{
   displacements: IDisplacement[];
 }> {
-  const { data } = await axiosApi.get("/Deslocamento");
+  const { data } = await axiosApi({
+    method: "GET",
+    url: "/Deslocamento",
+  });
   return {
     displacements: data,
   };

@@ -1,30 +1,16 @@
+import { axiosApi } from "@/lib/axios";
 import {
   IVehicle,
   IVehicleCreate,
   IVehicleDelete,
-  IVehicleSelectInputData,
   IVehicleUpdate,
 } from "@/dataTypes/vehicle.dto";
-import { axiosApi } from "@/lib/axios";
-
-export async function getVehicleInputData(): Promise<{
-  vehicles: IVehicleSelectInputData[];
-}> {
-  const { data } = await axiosApi.get("/Veiculo");
-  const vehicles = data.map((vehicle: IVehicle) => {
-    return {
-      id: vehicle.id,
-      nome: `${vehicle.marcaModelo} - ${vehicle.anoFabricacao}`,
-    };
-  });
-
-  return {
-    vehicles,
-  };
-}
 
 export async function getAllVehicles(): Promise<{ vehicles: IVehicle[] }> {
-  const { data } = await axiosApi.get("/Veiculo");
+  const { data } = await axiosApi({
+    method: "GET",
+    url: "/Veiculo",
+  });
   return {
     vehicles: data,
   };
@@ -33,7 +19,10 @@ export async function getAllVehicles(): Promise<{ vehicles: IVehicle[] }> {
 export async function getVehicleById(
   id: string
 ): Promise<{ vehicle: IVehicle | null }> {
-  const { data } = await axiosApi.get(`/Veiculo/${id}`);
+  const { data } = await axiosApi({
+    method: "GET",
+    url: `/Veiculo/${id}`,
+  });
   return { vehicle: data };
 }
 

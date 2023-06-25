@@ -1,20 +1,26 @@
+import { axiosApi } from "@/lib/axios";
 import {
   IUser,
   IUserCreate,
   IUserDelete,
   IUserUpdate,
 } from "@/dataTypes/passanger.dto";
-import { axiosApi } from "@/lib/axios";
 
 export async function getAllUsers(): Promise<{ users: IUser[] }> {
-  const { data } = await axiosApi.get("/Cliente");
+  const { data } = await axiosApi({
+    method: "GET",
+    url: "/Cliente",
+  });
   return {
     users: data,
   };
 }
 
 export async function getUserById(id: string): Promise<{ user: IUser }> {
-  const { data } = await axiosApi.get(`/Cliente/${id}`);
+  const { data } = await axiosApi({
+    method: "GET",
+    url: `/Cliente/${id}`,
+  });
   return { user: data };
 }
 
