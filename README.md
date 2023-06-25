@@ -1,10 +1,10 @@
-# Deploy
+<!-- # Deploy
 
 <ul>
   <li>
     <a href="https://naty-challenge-move.vercel.app/">Move</a>
   </li>
-</ul>
+</ul> -->
 
 # Technologies and Libraries
 
