@@ -3,10 +3,13 @@ import { useRouter } from "next/router";
 import dayjs from "dayjs";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 
 import { IMenuLink } from "@/components/HeaderMenu/HeaderMenu.props";
 import { IDriver, IDriverUpdate } from "@/dataTypes/driver.dto";
+import {
+  DriveRegisterFormData,
+  driverFormSchema,
+} from "@/dataTypes/driverFormSchema";
 
 import { useNotificationModal } from "@/components/NotificationModal/NotificationModal.controller";
 import { useDriverForm } from "@/pages/register/DriverForm/DriverForm.controller";
@@ -36,8 +39,7 @@ export function useDriverPage(driver: IDriver | null) {
     },
   ];
 
-  const { driverFormSchema, isDisabled, handleAbleDisableForm } =
-    useDriverForm();
+  const { isDisabled, handleAbleDisableForm } = useDriverForm();
 
   const defaultDriverValues = {
     nome: driver?.nome,
@@ -48,7 +50,6 @@ export function useDriverPage(driver: IDriver | null) {
     ),
   };
 
-  type DriveRegisterFormData = z.infer<typeof driverFormSchema>;
   const {
     control,
     handleSubmit,
@@ -73,6 +74,7 @@ export function useDriverPage(driver: IDriver | null) {
         error: true,
         redirect: "/",
       });
+      return;
     }
 
     try {

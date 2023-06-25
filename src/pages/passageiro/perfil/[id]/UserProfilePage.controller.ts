@@ -9,6 +9,10 @@ import { useUserForm } from "@/pages/register/UserForm/UserForm.controller";
 import { IUser, IUserUpdate } from "@/dataTypes/passanger.dto";
 import { deleteUser, updateUser } from "@/services/requests/user.request";
 import { MouseEvent, useEffect, useState } from "react";
+import {
+  UserRegisterFormData,
+  userFormSchema,
+} from "@/dataTypes/userFormSchema";
 
 export function useUserProfilePage(user: IUser | null) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -22,7 +26,7 @@ export function useUserProfilePage(user: IUser | null) {
     modalInfos,
   } = useNotificationModal();
 
-  const { userFormSchema, isDisabled, handleAbleDisableForm } = useUserForm();
+  const { isDisabled, handleAbleDisableForm } = useUserForm();
 
   const defaultUserValues = {
     nome: user?.nome,
@@ -35,7 +39,6 @@ export function useUserProfilePage(user: IUser | null) {
     uf: user?.uf,
   };
 
-  type UserRegisterFormData = z.infer<typeof userFormSchema>;
   const {
     control,
     handleSubmit,

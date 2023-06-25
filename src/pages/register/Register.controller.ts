@@ -1,4 +1,3 @@
-import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -9,10 +8,18 @@ import { useNotificationModal } from "@/components/NotificationModal/Notificatio
 
 import { createDriver } from "@/services/requests/driver.request";
 import { createUser } from "@/services/requests/user.request";
+import {
+  DriveRegisterFormData,
+  driverFormSchema,
+} from "@/dataTypes/driverFormSchema";
+import {
+  UserRegisterFormData,
+  userFormSchema,
+} from "@/dataTypes/userFormSchema";
 
 export function useRegister() {
-  const { driverFormSchema, defaultDriverValues } = useDriverForm();
-  const { userFormSchema, defaultUserValues } = useUserForm();
+  const { defaultDriverValues } = useDriverForm();
+  const { defaultUserValues } = useUserForm();
   const { handleRadioGroupChange, radioGroupValue } =
     useRadioGroupClientDriver();
   const {
@@ -21,9 +28,6 @@ export function useRegister() {
     defineNotificationModalInfos,
     modalInfos,
   } = useNotificationModal();
-
-  type DriveRegisterFormData = z.infer<typeof driverFormSchema>;
-  type UserRegisterFormData = z.infer<typeof userFormSchema>;
 
   const {
     control,

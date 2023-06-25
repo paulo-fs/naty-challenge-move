@@ -1,7 +1,6 @@
 import { ChangeEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 
 import {
   deleteVehicle,
@@ -15,6 +14,10 @@ import { useNotificationModal } from "@/components/NotificationModal/Notificatio
 import { useConfirmModal } from "@/components/ConfirmModal/ConfirmModal.controller";
 
 import { IVehicle, IVehicleUpdate } from "@/dataTypes/vehicle.dto";
+import {
+  VehicleRegisterFormData,
+  vehicleFormSchema,
+} from "@/dataTypes/vehicleFormSchema";
 
 export function useVeiclePanel(vehicles: IVehicle[] | null) {
   const [vehicleId, setVehicleId] = useState("");
@@ -23,15 +26,12 @@ export function useVeiclePanel(vehicles: IVehicle[] | null) {
   const { isFormModalOpen, handleOpenCloseFormModal } = useFormModal();
   const { confirmModalState, handleCloseConfirmModal, setConfirmModal } =
     useConfirmModal();
-  const { vehicleFormSchema } = useVehicleForm();
   const {
     isModalOpen,
     closeNotificationModal,
     defineNotificationModalInfos,
     modalInfos,
   } = useNotificationModal();
-
-  type VehicleRegisterFormData = z.infer<typeof vehicleFormSchema>;
 
   const {
     control,

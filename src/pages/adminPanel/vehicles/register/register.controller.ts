@@ -1,22 +1,21 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 
 import { useNotificationModal } from "@/components/NotificationModal/NotificationModal.controller";
-import { useVehicleForm } from "./VehicleForm/VehicleForm.controller";
+import {
+  VehicleRegisterFormData,
+  vehicleFormSchema,
+} from "@/dataTypes/vehicleFormSchema";
 
 import { createVehicle } from "@/services/requests/vehicle.request";
 
 export function useRegister() {
-  const { vehicleFormSchema } = useVehicleForm();
   const {
     isModalOpen,
     closeNotificationModal,
     defineNotificationModalInfos,
     modalInfos,
   } = useNotificationModal();
-
-  type VehicleRegisterFormData = z.infer<typeof vehicleFormSchema>;
 
   const {
     control,
